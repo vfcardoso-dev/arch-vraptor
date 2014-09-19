@@ -1,0 +1,21 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+*.jar
+*.zip
+
+# Pastas #
+build/
+dist/
+nbproject/
+out/
+.idea/*
+
+# Arquivos #
+nbbuild.xml
+context.xml
+.gitkeep
+*.db
+*.iml
