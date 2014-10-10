@@ -9,6 +9,8 @@ import org.hamcrest.Matchers;
 import java.io.*;
 import java.net.SocketException;
 import java.nio.channels.FileChannel;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -43,7 +45,8 @@ public class IOUtils {
 
     public static String getResourceKeyByValue(String value, String resourceFile) {
         try {
-            return selectFirst(getResource(resourceFile).getKeys(), Matchers.equalTo(value)) ;
+            List<String> keyList = Collections.list(getResource(resourceFile).getKeys());
+            return selectFirst(keyList, Matchers.equalTo(value)) ;
         } catch (UtilityException e) {
             throw new UtilityException("Não foi possível recuperar a chave.", e);
         }
