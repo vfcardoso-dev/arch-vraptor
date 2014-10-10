@@ -45,10 +45,20 @@ public class IOUtils {
 
     public static String getResourceKeyByValue(String value, String resourceFile) {
         try {
+            String retorno = null;
             List<String> keyList = Collections.list(getResource(resourceFile).getKeys());
-            return selectFirst(keyList, Matchers.equalTo(value)) ;
+            for(String key : keyList) {
+                if(getResourceValue(key, resourceFile).equals(value)) {
+                    retorno = key;
+                }
+            }
+            if(retorno != null) {
+                return retorno;
+            } else {
+                throw new UtilityException("Não foi possível recuperar a chave.");
+            }
         } catch (UtilityException e) {
-            throw new UtilityException("Não foi possível recuperar a chave.", e);
+            throw e;
         }
     }
 
