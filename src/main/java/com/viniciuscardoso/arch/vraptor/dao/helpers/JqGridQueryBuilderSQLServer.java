@@ -48,4 +48,20 @@ public class JqGridQueryBuilderSQLServer extends JqGridQueryBuilder implements I
     public List<Object[]> executeQuery(Query q) {
         return super.executeQuery(q);
     }
+
+    public void setQueryJqGridFilterWithGroupBy(StringBuilder consulta, String groupBy, String sField, String sOper, String sidx, String sord) {
+        if (!consulta.toString().toLowerCase().contains(" where ")) {
+            consulta.append(" WHERE 1=1 ");
+        }
+
+        if (sField != null && sOper != null) {
+            consulta.append("having ").append(sField).append(convertSearchOper(sOper)).append(" :param ");
+        }
+
+        if (groupBy != null) consulta.append(groupBy);
+
+        if (sidx != null || sord != null) {
+            consulta.append("order by ").append(setOrderBy(sidx, sord));
+        }
+    }
 }
