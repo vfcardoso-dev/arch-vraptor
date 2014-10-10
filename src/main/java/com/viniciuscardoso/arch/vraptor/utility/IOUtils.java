@@ -4,12 +4,17 @@ import br.com.caelum.vraptor.interceptor.download.Download;
 import br.com.caelum.vraptor.interceptor.download.FileDownload;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import com.viniciuscardoso.arch.vraptor.exception.UtilityException;
+import org.hamcrest.Matchers;
 
 import java.io.*;
 import java.net.SocketException;
 import java.nio.channels.FileChannel;
 import java.util.ResourceBundle;
 import java.util.UUID;
+
+import static ch.lambdaj.Lambda.on;
+import static ch.lambdaj.Lambda.select;
+import static ch.lambdaj.Lambda.selectFirst;
 
 /**
  * Project: arch
@@ -32,7 +37,15 @@ public class IOUtils {
         try {
             return getResource(resourceFile).getString(key);
         } catch (UtilityException e) {
-            throw new UtilityException("Não foi possível recuperar a mensagem.", e);
+            throw new UtilityException("Não foi possível recuperar o valor.", e);
+        }
+    }
+
+    public static String getResourceKeyByValue(String value, String resourceFile) {
+        try {
+            return selectFirst(getResource(resourceFile).getKeys(), Matchers.equalTo(value)) ;
+        } catch (UtilityException e) {
+            throw new UtilityException("Não foi possível recuperar a chave.", e);
         }
     }
 
