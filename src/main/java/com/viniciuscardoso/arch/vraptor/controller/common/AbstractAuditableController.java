@@ -6,6 +6,7 @@ import com.viniciuscardoso.arch.vraptor.controller.interfaces.IControllerCrud;
 import com.viniciuscardoso.arch.vraptor.controller.interfaces.IControllerCrudUpload;
 import com.viniciuscardoso.arch.vraptor.dao.common.AbstractAuditableDao;
 import com.viniciuscardoso.arch.vraptor.domain.common.AbstractEntity;
+import com.viniciuscardoso.arch.vraptor.domain.interfaces.IActorAudited;
 import com.viniciuscardoso.arch.vraptor.exception.ControllerException;
 import com.viniciuscardoso.arch.vraptor.utility.ControllerUtils;
 
@@ -49,7 +50,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
      * @param textSuccess texto a ser apresentado (substantivo + verbo) para quando persistir com sucesso
      * @param self objeto controller instanciado, para fazer o redirecionamento após salvar
      */
-    public void add(E entity, String textSuccess, IControllerCrud self, AbstractEntity creator) {
+    public void add(E entity, String textSuccess, IControllerCrud self, IActorAudited creator) {
         try {
             dao.save(entity, creator);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
@@ -67,7 +68,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
      * @param textSuccess texto a ser apresentado (substantivo + verbo) para quando persistir com sucesso
      * @param self objeto controller instanciado, para fazer o redirecionamento após salvar
      */
-    public void add(E entity, String textSuccess, IControllerCrudUpload self, AbstractEntity creator) {
+    public void add(E entity, String textSuccess, IControllerCrudUpload self, IActorAudited creator) {
         try {
             dao.save(entity, creator);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
@@ -94,7 +95,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
      * @param textSuccess texto a ser apresentado (substantivo + verbo) para quando persistir com sucesso
      * @param self objeto controller instanciado, para fazer o redirecionamento após atualizar
      */
-    public void update(E entity, String textSuccess, IControllerCrud self, AbstractEntity changer) {
+    public void update(E entity, String textSuccess, IControllerCrud self, IActorAudited changer) {
         try {
             dao.update(entity, changer);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
@@ -111,7 +112,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
      * @param textSuccess texto a ser apresentado (substantivo + verbo) para quando persistir com sucesso
      * @param self objeto controller instanciado, para fazer o redirecionamento após atualizar
      */
-    public void update(E entity, String textSuccess, IControllerCrudUpload self, AbstractEntity changer) {
+    public void update(E entity, String textSuccess, IControllerCrudUpload self, IActorAudited changer) {
         try {
             dao.update(entity, changer);
             ControllerUtils.defineSuccessMessage(result, textSuccess);

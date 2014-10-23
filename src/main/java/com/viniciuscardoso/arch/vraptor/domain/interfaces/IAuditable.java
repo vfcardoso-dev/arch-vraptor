@@ -10,7 +10,7 @@ import org.joda.time.LocalDateTime;
  * Time: 15:20
  * To change this template use File | Settings | File Templates.
  */
-public interface IAuditable<T extends AbstractEntity> {
+public interface IAuditable<T extends IActorAudited> {
 
     public abstract LocalDateTime getCreatedAt();
     public abstract void setCreatedAt(LocalDateTime creationDate);

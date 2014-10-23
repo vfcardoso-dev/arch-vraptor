@@ -1,6 +1,7 @@
 package com.viniciuscardoso.arch.vraptor.dao.common;
 
 import com.viniciuscardoso.arch.vraptor.domain.common.AbstractEntity;
+import com.viniciuscardoso.arch.vraptor.domain.interfaces.IActorAudited;
 import com.viniciuscardoso.arch.vraptor.domain.interfaces.IAuditable;
 import com.viniciuscardoso.arch.vraptor.exception.DaoException;
 import org.apache.log4j.Logger;
@@ -21,7 +22,7 @@ import static ch.lambdaj.Lambda.join;
  * Time: 14:38
  */
 
-public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends AbstractEntity> {
+public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends IActorAudited> {
 
     //<editor-fold desc="[Attributes, Constructors, Setters/Getters]">
 	private final Logger logger;
