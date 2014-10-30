@@ -39,7 +39,7 @@ public class IOUtils {
         try {
             return getResource(resourceFile).getString(key);
         } catch (UtilityException e) {
-            throw new UtilityException("Não foi possível recuperar o valor.", e);
+            throw new UtilityException("Não foi possível recuperar o valor. [" + resourceFile + " :: " + key + "]", e);
         }
     }
 
@@ -55,7 +55,7 @@ public class IOUtils {
             if(retorno != null) {
                 return retorno;
             } else {
-                throw new UtilityException("Não foi possível recuperar a chave.");
+                throw new UtilityException("Não foi possível recuperar a chave. [" + resourceFile + " :: " + value + "]");
             }
         } catch (UtilityException e) {
             throw e;
