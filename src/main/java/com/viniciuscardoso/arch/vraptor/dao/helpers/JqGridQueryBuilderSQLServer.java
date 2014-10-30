@@ -25,7 +25,7 @@ public class JqGridQueryBuilderSQLServer extends JqGridQueryBuilder implements I
         }
 
         if (sField != null && sOper != null) {
-            consulta.append("having ").append(sField).append(convertSearchOper(sOper)).append(" :param ");
+            consulta.append("and ").append(sField).append(convertSearchOper(sOper)).append(" :param ");
         }
 
         if (sidx != null || sord != null) {

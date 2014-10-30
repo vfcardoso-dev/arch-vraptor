@@ -17,37 +17,7 @@ import java.util.List;
  */
 public abstract class JqGridQueryBuilder {
 
-    protected void setQueryJqGridFilter(StringBuilder consulta, String sField, String sOper, String sidx, String sord) {
-        if (!consulta.toString().toLowerCase().contains(" where ")) {
-            consulta.append(" WHERE 1=1 ");
-        }
-
-        if (sField != null && sOper != null) {
-            //consulta.append("having ").append(sField).append(convertSearchOper(sOper)).append(" :param ");
-            //MS SQL não suporta 'having' para querys sem 'group by' como o MYSQL.
-            consulta.append("and ").append(sField).append(convertSearchOper(sOper)).append(" :param ");
-        }
-
-        if (sidx != null || sord != null) {
-            consulta.append("order by ").append(setOrderBy(sidx, sord));
-        }
-    }
-
-//    public static void setQueryJqGridFilterFirebird(StringBuilder consulta, String sField, String sOper, String sidx, String sord) {
-//        if (!consulta.toString().toLowerCase().contains(" where ")) {
-//            consulta.append(" WHERE 1=1 ");
-//        }
-//
-//        if (sField != null && sOper != null) {
-//            //consulta.append("having ").append(sField).append(convertSearchOper(sOper)).append(" :param ");
-//            //MS SQL não suporta 'having' para querys sem 'group by' como o MYSQL.
-//            consulta.append("and ").append(sField).append(convertSearchOperFirebird(sOper)).append(" :param ");
-//        }
-//
-//        if (sidx != null || sord != null) {
-//            consulta.append("order by ").append(setOrderBy(sidx, sord));
-//        }
-//    }
+    protected abstract void setQueryJqGridFilter(StringBuilder consulta, String sField, String sOper, String sidx, String sord);
 
     protected String setOrderBy(String sidx, String sord) {
         if (sidx.charAt(sidx.length() - 1) == ',') {
