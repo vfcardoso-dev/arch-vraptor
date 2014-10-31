@@ -94,7 +94,7 @@ public abstract class AbstractGenericDao<T extends AbstractGenericEntity> {
         }
     }
 
-    public List<T> listOrdered(String[] listFields) {
+    public List<T> listOrdered(String... listFields) {
         String q = "from " + this.classe.getName();
         if (listFields.length > 0) q += " order by " + join(listFields, ", ");
 

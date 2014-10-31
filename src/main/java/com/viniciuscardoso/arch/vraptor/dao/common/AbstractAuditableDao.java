@@ -112,7 +112,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
         }
     }
 
-    public List<T> listOrdered(String[] listFields) {
+    public List<T> listOrdered(String... listFields) {
         String q = "from " + this.classe.getName();
         if (listFields.length > 0) q += " order by " + join(listFields, ", ");
 
