@@ -14,6 +14,10 @@ import java.security.NoSuchAlgorithmException;
  */
 public class EncryptionUtils {
 
+    public static final String MD5 = "MD5";
+    public static final String SHA1 = "SHA-1";
+    public static final String SHA256 = "SHA-256";
+
     /**
      * Método que gera string criptografada
      *
