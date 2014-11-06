@@ -73,7 +73,7 @@ public abstract class AbstractController<T extends AbstractDao, E extends Abstra
             result.redirectTo(self).list();
         } catch (ControllerException e) {
             ControllerUtils.defineErrorMessage(result, e);
-            result.redirectTo(self).newObject();
+            result.redirectTo(self).create();
         }
 
     }

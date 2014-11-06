@@ -75,7 +75,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
             result.redirectTo(self).list();
         } catch (ControllerException e) {
             ControllerUtils.defineErrorMessage(result, e);
-            result.redirectTo(self).newObject();
+            result.redirectTo(self).create();
         }
 
     }
