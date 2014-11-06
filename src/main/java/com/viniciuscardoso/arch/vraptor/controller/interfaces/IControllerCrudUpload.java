@@ -18,7 +18,7 @@ public interface IControllerCrudUpload<E extends AbstractEntity> {
     
     public abstract void list();
 
-    public abstract void newObject();
+    public abstract void create();
 
     public abstract void add(E entity, UploadedFile arq);
 
