@@ -158,9 +158,32 @@ public class IOUtils {
         return newFilename;
     }
 
+    public static String writeUploadToDisk(UploadedFile uplFile, String fileDir, String oldFileName) throws Exception {
+        String newFilename = IOUtils.getUniqueFileName(uplFile);
+        if (oldFileName != null) {
+            File oldFile = new File(fileDir, oldFileName);
+            IOUtils.createDir(fileDir);
+            IOUtils.writeFile(fileDir, newFilename, uplFile);
+            IOUtils.deleteFile(oldFile);
+        } else {
+            IOUtils.createDir(fileDir);
+            IOUtils.writeFile(fileDir, newFilename, uplFile);
+        }
+        return newFilename;
+    }
+
     public static Download downloadFile(String downloadFileName, String storedFileName, String resourceKey, String resourceBundle, String mimeType) throws Exception {
         try {
             String fileDir = IOUtils.getFullPath(resourceKey,resourceBundle);
+            File arq = new File(fileDir, storedFileName);
+            return new FileDownload(arq, mimeType, ConvertUtils.convertStringToSafeFilename(downloadFileName));
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public static Download downloadFile(String downloadFileName, String storedFileName, String fileDir, String mimeType) throws Exception {
+        try {
             File arq = new File(fileDir, storedFileName);
             return new FileDownload(arq, mimeType, ConvertUtils.convertStringToSafeFilename(downloadFileName));
         } catch (Exception e) {
