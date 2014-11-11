@@ -59,7 +59,7 @@ public class ControllerUtils {
      */
     public static void defineErrorMessage(Result result, Exception e) {
         result.include("alerta", e.getMessage());
-        result.include("causa", " Causa: " + e.getCause());
+        if (e.getCause() != null) result.include("causa", " Causa: " + e.getCause());
         result.include("classeAlerta", "alert-danger");
     }
     
