@@ -58,7 +58,7 @@ public class ControllerUtils {
      * @param e Exception lançada
      */
     public static void defineErrorMessage(Result result, Exception e) {
-        result.include("alerta", e.getMessage());
+        result.include("alerta", (e.getMessage() == null || e.getMessage().equals("")) ? "NullPointerException" : e.getMessage());
         if (e.getCause() != null) result.include("causa", " Causa: " + e.getCause());
         result.include("classeAlerta", "alert-danger");
     }
