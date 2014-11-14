@@ -1,7 +1,6 @@
 package com.viniciuscardoso.arch.vraptor.controller.interfaces;
 
 
-import br.com.caelum.vraptor.Get;
 import com.viniciuscardoso.arch.vraptor.domain.common.AbstractEntity;
 
 /**
@@ -13,6 +12,5 @@ import com.viniciuscardoso.arch.vraptor.domain.common.AbstractEntity;
 
 public interface IControllerExternal<E extends AbstractEntity> {
 
-    @Get
     public abstract void list();
 }
