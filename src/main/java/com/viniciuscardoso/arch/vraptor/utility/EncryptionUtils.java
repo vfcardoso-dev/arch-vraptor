@@ -29,6 +29,26 @@ public class EncryptionUtils {
         return getHexString(getByteHash(phrase, algorithm));
     }
 
+    /**
+     * Método que retorna uma sequência de caracteres randômicos, em uppercase por default.
+     * @param length Comprimento da sequência.
+     * @param includeLowercase incluir caracteres em lowercase
+     * @param includeNumber incluir caracteres numéricos
+     * @param includeSpecial incluir caracteres especiais
+     * @return sequência de caracteres
+     */
+    public static String getRandomString(int length, boolean includeLowercase, boolean includeNumber, boolean includeSpecial) {
+        String seq = "";
+        if(length > 0) {
+            for (int i = 0; i < length; i++) {
+                seq += getRandomString(length, includeLowercase, includeNumber, includeSpecial);
+            }
+            return seq;
+        } else {
+            return seq;
+        }
+    }
+
     private static byte[] getByteHash(String phrase, String algorithm) {
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
@@ -41,14 +61,33 @@ public class EncryptionUtils {
 
     private static String getHexString(byte[] bytes) {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            int higherPart = ((bytes[i] >> 4) & 0xf) << 4;
-            int lowerPart = bytes[i] & 0xf;
+        for (byte aByte : bytes) {
+            int higherPart = ((aByte >> 4) & 0xf) << 4;
+            int lowerPart = aByte & 0xf;
             if (higherPart == 0) {
                 s.append('0');
             }
             s.append(Integer.toHexString(higherPart | lowerPart));
         }
         return s.toString();
+    }
+
+    private static Character getRandomChar(boolean includeLowercase, boolean includeNumber, boolean includeSpecial) {
+        int caracter = ConvertUtils.toInteger(33 + Math.floor((Math.random() * 100) + 1));
+        caracter = (caracter > 126) ? 126 : caracter;
+
+        //para entender recursão primeiro vc precisa entender recursão.
+        if(caracter > 64 && caracter < 91) {
+            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
+        } else if(!includeLowercase && (caracter > 96 && caracter < 123)) {
+            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
+        } else if(!includeNumber && (caracter > 47 && caracter < 58)) {
+            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
+        } else if(!includeSpecial && ((caracter >= 33 && caracter < 48) || (caracter > 57 && caracter < 65) ||
+                (caracter > 90 && caracter < 97) || (caracter > 122 && caracter <= 126))) {
+            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
+        } else {
+            return (char)caracter;
+        }
     }
 }
