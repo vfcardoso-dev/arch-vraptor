@@ -64,6 +64,16 @@ public abstract class AbstractGenericDao<T extends AbstractGenericEntity> {
         }
     }
 
+    public T getById(Integer id, String fieldName) {
+        try {
+            Query q = session.createQuery("from " + this.classe.getName() + " where " + fieldName + " = :id");
+            q.setParameter("id", id);
+            return (T) q.uniqueResult();
+        } catch (HibernateException e) {
+            throw new DaoException("Não foi possível carregar objeto [" + this.getEntityName() + "].", e);
+        }
+    }
+
     public T getById(String id, String fieldName) {
         try {
             Query q = session.createQuery("from " + this.classe.getName() + " where " + fieldName + " = :id");
