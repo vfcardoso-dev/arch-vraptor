@@ -2,6 +2,7 @@ package com.viniciuscardoso.arch.vraptor.utility;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 /**
  * @author Vinícius Cardoso
@@ -30,23 +31,27 @@ public class EncryptionUtils {
     }
 
     /**
-     * Método que retorna uma sequência de caracteres randômicos, em uppercase por default.
-     * @param length Comprimento da sequência.
-     * @param includeLowercase incluir caracteres em lowercase
-     * @param includeNumber incluir caracteres numéricos
-     * @param includeSpecial incluir caracteres especiais
+     * Gera uma sequência de caracteres pseudo-randômicos, por padrão em letras maiúsculas
+     * @param length comprimento da sequência
+     * @param includeAlphaLower adicionar caracteres minúsculos na saída
+     * @param includeNumber adicionar caracteres numéricos na saída
+     * @param includeSpecial adicionar caracteres especiais na saída
      * @return sequência de caracteres
      */
-    public static String getRandomString(int length, boolean includeLowercase, boolean includeNumber, boolean includeSpecial) {
-        String seq = "";
-        if(length > 0) {
-            for (int i = 0; i < length; i++) {
-                seq += getRandomString(length, includeLowercase, includeNumber, includeSpecial);
-            }
-            return seq;
-        } else {
-            return seq;
+    public static String getRandomString(int length, boolean includeAlphaLower, boolean includeNumber, boolean includeSpecial) {
+        String source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (includeAlphaLower) source += "abcdefghijklmnopqrstuvwxyz";
+        if (includeNumber) source += "01234567890";
+        if (includeSpecial) source += "!@#$%&*()[]{}çÇ<>";
+        int randomLength = source.length();
+        String randomSeq = "";
+        Random r = new Random();
+
+        for(int i = 0; i < length; i++) {
+            randomSeq += source.charAt(r.nextInt(randomLength));
         }
+
+        return randomSeq;
     }
 
     private static byte[] getByteHash(String phrase, String algorithm) {
@@ -70,24 +75,5 @@ public class EncryptionUtils {
             s.append(Integer.toHexString(higherPart | lowerPart));
         }
         return s.toString();
-    }
-
-    private static Character getRandomChar(boolean includeLowercase, boolean includeNumber, boolean includeSpecial) {
-        int caracter = ConvertUtils.toInteger(33 + Math.floor((Math.random() * 100) + 1));
-        caracter = (caracter > 126) ? 126 : caracter;
-
-        //para entender recursão primeiro vc precisa entender recursão.
-        if(caracter > 64 && caracter < 91) {
-            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
-        } else if(!includeLowercase && (caracter > 96 && caracter < 123)) {
-            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
-        } else if(!includeNumber && (caracter > 47 && caracter < 58)) {
-            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
-        } else if(!includeSpecial && ((caracter >= 33 && caracter < 48) || (caracter > 57 && caracter < 65) ||
-                (caracter > 90 && caracter < 97) || (caracter > 122 && caracter <= 126))) {
-            return getRandomChar(includeLowercase, includeNumber, includeSpecial);
-        } else {
-            return (char)caracter;
-        }
     }
 }
