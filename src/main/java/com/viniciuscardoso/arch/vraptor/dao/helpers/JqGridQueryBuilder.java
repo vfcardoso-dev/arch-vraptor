@@ -1,5 +1,7 @@
 package com.viniciuscardoso.arch.vraptor.dao.helpers;
 
+import com.viniciuscardoso.arch.vraptor.controller.json.JqGridFilters;
+import com.viniciuscardoso.arch.vraptor.controller.json.JqGridRules;
 import org.hibernate.CacheMode;
 import org.hibernate.Query;
 import org.joda.time.LocalDate;
@@ -18,6 +20,8 @@ import java.util.List;
 public abstract class JqGridQueryBuilder {
 
     protected abstract void setQueryJqGridFilter(StringBuilder consulta, String sField, String sOper, String sidx, String sord);
+
+    protected abstract void setQueryJqGridFilter(StringBuilder consulta, String sField, String sOper, String sidx, String sord, JqGridFilters filters);
 
     protected String setOrderBy(String sidx, String sord) {
         if (sidx.charAt(sidx.length() - 1) == ',') {
@@ -62,6 +66,47 @@ public abstract class JqGridQueryBuilder {
                 q.setParameter("param", "%" + sString + "%");
             } else {
                 q.setParameter("param", sString);
+            }
+        }
+    }
+
+    protected void addCustomParametersToQuery(Query q, String sField, String sString, String sOper, JqGridFilters filters) {
+        if (sField != null && sOper != null) {
+            if (sField.contains("ROWID")) {
+                q.setParameter("param", Long.valueOf(sString));
+            } else if (sField.contains("DT")) {
+                final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
+                final LocalDate dt = dtf.parseDateTime(sString).toLocalDate();
+                q.setParameter("param", dt);
+            } else if (sField.contains("DT_TM")) {
+                final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
+                final LocalDateTime dttm = dtf.parseDateTime(sString).toLocalDateTime();
+                q.setParameter("param", dttm);
+            } else if ("cn".equals(sOper)) {
+                q.setParameter("param", "%" + sString + "%");
+            } else {
+                q.setParameter("param", sString);
+            }
+        } else if (filters != null) {
+            JqGridRules rule;
+            for(int i = 0; i < filters.getRules().size(); i++) {
+                rule = filters.getRules().get(i);
+                String paramIdx = "param" + String.valueOf(i);
+                if (rule.getField().contains("ROWID")) {
+                    q.setParameter(paramIdx, Long.valueOf(rule.getData()));
+                } else if (rule.getField().contains("DT")) {
+                    final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
+                    final LocalDate dt = dtf.parseDateTime(rule.getData()).toLocalDate();
+                    q.setParameter(paramIdx, dt);
+                } else if (rule.getField().contains("DT_TM")) {
+                    final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
+                    final LocalDateTime dttm = dtf.parseDateTime(rule.getData()).toLocalDateTime();
+                    q.setParameter(paramIdx, dttm);
+                } else if ("cn".equals(rule.getOp())) {
+                    q.setParameter(paramIdx, "%" + rule.getData() + "%");
+                } else {
+                    q.setParameter(paramIdx, rule.getData());
+                }
             }
         }
     }
