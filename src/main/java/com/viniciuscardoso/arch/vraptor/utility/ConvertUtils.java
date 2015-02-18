@@ -1,6 +1,8 @@
 package com.viniciuscardoso.arch.vraptor.utility;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -70,7 +72,7 @@ public class ConvertUtils {
 
     //<editor-fold desc="[toLocalDateTime]">
     public static LocalDateTime parseDate(String maybeDate, String format) throws Exception {
-        LocalDateTime dt = null;
+        LocalDateTime dt;
         try {
             DateTimeFormatter fmt = DateTimeFormat.forPattern(format);
             DateTime dtTime = fmt.parseDateTime(maybeDate);
@@ -79,6 +81,21 @@ public class ConvertUtils {
             throw new Exception("Data inválida!");
         }
         return dt;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="[toLocalDate]">
+    public static LocalDate parseDateSavingTimeProof(String maybeDate, String format) throws Exception {
+        try {
+            String dateStripped = maybeDate.split(" ")[0] + " 01:00:00";
+            String formatStripped = format.split(" ")[0] + " HH:mm:ss";
+            DateTimeFormatter fmt = DateTimeFormat.forPattern(formatStripped);
+            DateTime dtTime = fmt.parseDateTime(dateStripped);
+            return dtTime.toLocalDate();
+        } catch (Exception var5) {
+            throw new Exception("Data inválida!");
+        }
+
     }
     //</editor-fold>
 
