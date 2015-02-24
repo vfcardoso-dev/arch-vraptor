@@ -80,7 +80,7 @@ public class IOUtils {
     public static String getUniqueFileName(UploadedFile file) {
         String finalFileName = UUID.randomUUID().toString();
         String filename = file.getFileName();
-        int start = filename.lastIndexOf("");
+        int start = filename.lastIndexOf(".");
         String extension = filename.substring(start);
         return finalFileName + extension;
     }
