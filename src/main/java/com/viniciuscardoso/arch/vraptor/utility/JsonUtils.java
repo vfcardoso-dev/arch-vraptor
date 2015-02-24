@@ -17,7 +17,16 @@ import java.util.ArrayList;
  */
 public class JsonUtils {
 
-	/**
+    /**
+     * Retorna JSON contendo status 200
+     * @param result Objeto result do Vraptor
+     */
+    public static void setSuccessJsonResult(Result result) {
+
+        result.use(Results.status()).ok();
+    }
+
+    /**
 	 * Retorna JSON contendo dados de erro, para exibição ao usuário
 	 * @param result Objeto result do Vraptor
 	 * @param e Exceção lançada
