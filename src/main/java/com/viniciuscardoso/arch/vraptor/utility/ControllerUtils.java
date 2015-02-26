@@ -90,8 +90,27 @@ public class ControllerUtils {
      * @param result Objeto result do Vraptor
      */
     public static void defineTodayMinusThreeMonths(Result result, String pattern) {
+        defineTodayMinusMonths(result, 3, pattern);
+    }
+
+    /**
+     * Define no result duas datas para uso por um seletor de período,
+     * sendo que a data1 é agora, e a data2 é agora menos x meses.
+     * @param result Objeto result do Vraptor
+     */
+    public static void defineTodayMinusMonths(Result result, Integer minusMonths, String pattern) {
         result.include("data1", new LocalDate().toString(pattern));
-        result.include("data2", new LocalDate().minusMonths(3).toString(pattern));
+        result.include("data2", new LocalDate().minusMonths(minusMonths).toString(pattern));
+    }
+
+    /**
+     * Define no result duas datas para uso por um seletor de período,
+     * sendo que a data1 é agora, e a data2 é agora menos x semanas.
+     * @param result Objeto result do Vraptor
+     */
+    public static void defineTodayMinusWeeks(Result result, Integer minusWeeks, String pattern) {
+        result.include("data1", new LocalDate().toString(pattern));
+        result.include("data2", new LocalDate().minusWeeks(minusWeeks).toString(pattern));
     }
     
     /**
