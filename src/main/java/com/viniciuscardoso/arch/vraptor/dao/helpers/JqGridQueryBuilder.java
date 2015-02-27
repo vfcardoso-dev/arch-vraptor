@@ -2,6 +2,7 @@ package com.viniciuscardoso.arch.vraptor.dao.helpers;
 
 import com.viniciuscardoso.arch.vraptor.controller.json.JqGridFilters;
 import com.viniciuscardoso.arch.vraptor.controller.json.JqGridRules;
+import com.viniciuscardoso.arch.vraptor.utility.ValidationUtils;
 import org.hibernate.CacheMode;
 import org.hibernate.Query;
 import org.joda.time.LocalDate;
@@ -52,13 +53,13 @@ public abstract class JqGridQueryBuilder {
 
     protected void addCustomParametersToQuery(Query q, String sField, String sString, String sOper) {
         if (sField != null && sOper != null) {
-            if (sField.contains("ROWID")) {
+            if (ValidationUtils.containsIgnoreCase(sField,"ROWID")) {
                 q.setParameter("param", Long.valueOf(sString));
-            } else if (sField.contains("DT")) {
+            } else if (ValidationUtils.containsIgnoreCase(sField, "DT")) {
                 final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
                 final LocalDate dt = dtf.parseDateTime(sString).toLocalDate();
                 q.setParameter("param", dt);
-            } else if (sField.contains("DT_TM")) {
+            } else if (ValidationUtils.containsIgnoreCase(sField,"DT_TM")) {
                 final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
                 final LocalDateTime dttm = dtf.parseDateTime(sString).toLocalDateTime();
                 q.setParameter("param", dttm);
@@ -72,13 +73,13 @@ public abstract class JqGridQueryBuilder {
 
     protected void addCustomParametersToQuery(Query q, String sField, String sString, String sOper, JqGridFilters filters) {
         if (sField != null && sOper != null) {
-            if (sField.contains("ROWID")) {
+            if (ValidationUtils.containsIgnoreCase(sField,"ROWID")) {
                 q.setParameter("param", Long.valueOf(sString));
-            } else if (sField.contains("DT")) {
+            } else if (ValidationUtils.containsIgnoreCase(sField, "DT")) {
                 final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
                 final LocalDate dt = dtf.parseDateTime(sString).toLocalDate();
                 q.setParameter("param", dt);
-            } else if (sField.contains("DT_TM")) {
+            } else if (ValidationUtils.containsIgnoreCase(sField, "DT_TM")) {
                 final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
                 final LocalDateTime dttm = dtf.parseDateTime(sString).toLocalDateTime();
                 q.setParameter("param", dttm);
@@ -92,13 +93,13 @@ public abstract class JqGridQueryBuilder {
             for(int i = 0; i < filters.getRules().size(); i++) {
                 rule = filters.getRules().get(i);
                 String paramIdx = "param" + String.valueOf(i);
-                if (rule.getField().contains("ROWID")) {
+                if (ValidationUtils.containsIgnoreCase(rule.getField(), "ROWID")) {
                     q.setParameter(paramIdx, Long.valueOf(rule.getData()));
-                } else if (rule.getField().contains("DT")) {
+                } else if (ValidationUtils.containsIgnoreCase(rule.getField(), "DT")) {
                     final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
                     final LocalDate dt = dtf.parseDateTime(rule.getData()).toLocalDate();
                     q.setParameter(paramIdx, dt);
-                } else if (rule.getField().contains("DT_TM")) {
+                } else if (ValidationUtils.containsIgnoreCase(rule.getField(),"DT_TM")) {
                     final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
                     final LocalDateTime dttm = dtf.parseDateTime(rule.getData()).toLocalDateTime();
                     q.setParameter(paramIdx, dttm);
