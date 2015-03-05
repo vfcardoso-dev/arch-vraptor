@@ -25,6 +25,6 @@ public abstract class AbstractExternalController<T extends AbstractGenericDao, E
      * @throws Exception 
      */
     public void list(String nameList, String[] fieldOrder) {
-        result.include(nameList, dao.listOrdered(fieldOrder));
+        result.include(nameList, dao.listSorted(fieldOrder));
     }
 }

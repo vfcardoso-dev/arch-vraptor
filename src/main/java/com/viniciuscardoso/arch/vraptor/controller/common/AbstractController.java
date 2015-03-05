@@ -32,7 +32,7 @@ public abstract class AbstractController<T extends AbstractDao, E extends Abstra
      * @param fieldOrder array contendo campos para ordenar
      */
     public void list(String nameList, String[] fieldOrder) {
-        result.include(nameList, dao.listOrdered(fieldOrder));
+        result.include(nameList, dao.listSorted(fieldOrder));
     }
 
     /**

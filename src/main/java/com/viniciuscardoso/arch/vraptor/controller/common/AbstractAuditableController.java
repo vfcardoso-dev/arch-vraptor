@@ -34,7 +34,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
      * @param fieldOrder array contendo campos para ordenar
      */
     public void list(String nameList, String[] fieldOrder) {
-        result.include(nameList, dao.listOrdered(fieldOrder));
+        result.include(nameList, dao.listSorted(fieldOrder));
     }
 
     /**

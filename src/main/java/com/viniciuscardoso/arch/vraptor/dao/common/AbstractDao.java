@@ -100,7 +100,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         }
     }
 
-    public List<T> listOrdered(String... listFields) {
+    public List<T> listSorted(String... listFields) {
         String q = "from " + this.classe.getName();
         if (listFields.length > 0) q += " order by " + join(listFields, ", ");
 
