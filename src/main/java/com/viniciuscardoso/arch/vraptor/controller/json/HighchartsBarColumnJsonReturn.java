@@ -9,10 +9,10 @@ import java.util.List;
  * Date: 13/12/13
  * Time: 09:01
  */
-public class HighchartsColumnJsonReturn {
+public class HighchartsBarColumnJsonReturn {
     private String name;
-    private List<Integer> values = new ArrayList<Integer>(0);
-    private List<String> categories = new ArrayList<String>(0);
+    private List<Integer> values = new ArrayList<>(0);
+    private List<String> categories = new ArrayList<>(0);
 
     public void setValues(List<Integer> values) {
         this.values = values;
