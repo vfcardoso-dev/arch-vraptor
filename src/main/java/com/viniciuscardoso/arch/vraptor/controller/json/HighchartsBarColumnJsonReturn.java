@@ -12,7 +12,7 @@ import java.util.List;
 public class HighchartsBarColumnJsonReturn {
     private String title;
     private String label;
-    private List<Integer> values = new ArrayList<>(0);
+    private List<Double> values = new ArrayList<>(0);
     private List<String> categories = new ArrayList<>(0);
 
     public String getTitle() {
@@ -31,11 +31,11 @@ public class HighchartsBarColumnJsonReturn {
         this.label = label;
     }
 
-    public List<Integer> getValues() {
+    public List<Double> getValues() {
         return values;
     }
 
-    public void setValues(List<Integer> values) {
+    public void setValues(List<Double> values) {
         this.values = values;
     }
 
