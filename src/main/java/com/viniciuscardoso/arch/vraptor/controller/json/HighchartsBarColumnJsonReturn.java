@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class HighchartsBarColumnJsonReturn {
     private String title;
-    private String name;
+    private String label;
     private List<Integer> values = new ArrayList<>(0);
     private List<String> categories = new ArrayList<>(0);
 
@@ -23,12 +23,12 @@ public class HighchartsBarColumnJsonReturn {
         this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public List<Integer> getValues() {

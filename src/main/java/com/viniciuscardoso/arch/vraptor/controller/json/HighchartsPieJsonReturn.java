@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class HighchartsPieJsonReturn {
     private String title;
-    private String name;
+    private String label;
     private Map<String, Double> mapa = new HashMap<>();
 
     public String getTitle() {
@@ -22,12 +22,12 @@ public class HighchartsPieJsonReturn {
         this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Map<String, Double> getMapa() {
