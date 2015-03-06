@@ -10,23 +10,40 @@ import java.util.List;
  * Time: 09:01
  */
 public class HighchartsBarColumnJsonReturn {
+    private String title;
     private String name;
     private List<Integer> values = new ArrayList<>(0);
     private List<String> categories = new ArrayList<>(0);
 
-    public void setValues(List<Integer> values) {
-        this.values = values;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setCategories(List<String> categories) {
-        this.categories = categories;
+    public List<Integer> getValues() {
+        return values;
+    }
+
+    public void setValues(List<Integer> values) {
+        this.values = values;
     }
 
     public List<String> getCategories() {
         return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }

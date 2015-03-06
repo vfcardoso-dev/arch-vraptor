@@ -10,8 +10,17 @@ import java.util.Map;
  * Time: 15:35
  */
 public class HighchartsPieJsonReturn {
+    private String title;
     private String name;
     private Map<String, Double> mapa = new HashMap<>();
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getName() {
         return name;
