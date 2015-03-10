@@ -8,7 +8,9 @@ import org.hamcrest.Matchers;
 
 import java.io.*;
 import java.net.SocketException;
+import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -137,6 +139,18 @@ public class IOUtils {
         outCh.transferFrom(inCh, 0, inCh.size());
 
         fis.close();
+        fos.close();
+        inCh.close();
+        outCh.close();
+    }
+
+    public static void copyFiles(InputStream is, FileOutputStream fos) throws IOException {
+        ReadableByteChannel inCh = Channels.newChannel(is);
+        FileChannel outCh = fos.getChannel();
+
+        outCh.transferFrom(inCh, 0, Integer.MAX_VALUE);
+
+        is.close();
         fos.close();
         inCh.close();
         outCh.close();
