@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import static ch.lambdaj.Lambda.on;
 import static ch.lambdaj.Lambda.select;
@@ -202,6 +204,42 @@ public class IOUtils {
             return new FileDownload(arq, mimeType, ConvertUtils.convertStringToSafeFilename(downloadFileName));
         } catch (Exception e) {
             throw e;
+        }
+    }
+
+    public static void packCurrentDirectoryContents(String directoryPath, ZipOutputStream zos, String raiz) throws IOException {
+        // Iterate through the directory elements
+        for (String dirElement : new File(directoryPath).list()) {
+
+            // Construct each element full path
+            String dirElementPath = directoryPath + "/" + dirElement;
+
+            // For directories - go down the directory tree recursively
+            if (new File(dirElementPath).isDirectory()) packCurrentDirectoryContents(dirElementPath, zos, raiz);
+            // For files add the a ZIP entry
+            // THIS IS IMPORTANT: a ZIP entry needs to be a relative path to the file
+            // so we cut off the path to the directory that is being packed.
+            int tamRaiz = raiz.length();
+            if (new File(dirElementPath).isDirectory()) {
+                ZipEntry ze = new ZipEntry(dirElementPath.substring(tamRaiz + 1, dirElementPath.length()) + "/");
+                zos.putNextEntry(ze);
+            } else {
+                ZipEntry ze = new ZipEntry(dirElementPath.substring(tamRaiz + 1, dirElementPath.length()));
+                zos.putNextEntry(ze);
+
+                // Open input stream to packed file
+                FileInputStream fis = new FileInputStream(dirElementPath);
+
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = fis.read(buf)) > 0) {
+                    zos.write(buf, 0, len);
+                }
+
+                // Close the stream
+                fis.close();
+            }
+
         }
     }
 }

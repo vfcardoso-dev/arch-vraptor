@@ -6,6 +6,7 @@ package com.viniciuscardoso.arch.vraptor.controller.json;
  * Date: 13/12/13
  * Time: 10:52
  */
+@Deprecated
 public class HtmlSelectOptionJsonReturn {
     private Long id;
     private String description;

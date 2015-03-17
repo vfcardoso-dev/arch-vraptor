@@ -1,5 +1,6 @@
 package com.viniciuscardoso.arch.vraptor.utility;
 
+import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -49,5 +50,20 @@ public class ValidationUtils {
 
     public static boolean containsIgnoreCase(String str, String pattern) {
         return Pattern.compile(Pattern.quote(pattern), Pattern.CASE_INSENSITIVE).matcher(str).find();
+    }
+
+    public static boolean isFileDefinedAndValid(UploadedFile arq, String mime, Integer maxSizeInMb) {
+        return arq != null && arq.getSize() < (maxSizeInMb * Math.pow(1024, 2)) && arq.getContentType().equalsIgnoreCase(mime);
+    }
+
+    public static boolean isFileDefinedAndValid(UploadedFile[] arqs, String mime, Integer maxSizeInMb) {
+        boolean resultado = true;
+        if (arqs == null) resultado = false;
+        for (UploadedFile arq : arqs) {
+            if (arq.getSize() > (maxSizeInMb * Math.pow(1024, 2)) && !arq.getContentType().equalsIgnoreCase(mime)) {
+                resultado = false;
+            }
+        }
+        return resultado;
     }
 }
