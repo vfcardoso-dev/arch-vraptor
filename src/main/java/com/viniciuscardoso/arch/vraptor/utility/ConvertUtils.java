@@ -1,12 +1,13 @@
 package com.viniciuscardoso.arch.vraptor.utility;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -68,6 +69,13 @@ public class ConvertUtils {
         ret = ret.replaceAll("[\\\\\\/\\:\\*\\?\\\"\\<\\>\\|\\s]", "-");
         return ret;
     }
+
+    public static String throwableToString(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        return sw.toString();
+    }
     //</editor-fold>
 
     //<editor-fold desc="[toLocalDateTime]">
@@ -99,6 +107,7 @@ public class ConvertUtils {
     }
     //</editor-fold>
 
+    //<editor-fold desc="[toDouble]">
     public static double roundUp(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
@@ -106,10 +115,13 @@ public class ConvertUtils {
         bd = bd.setScale(places, BigDecimal.ROUND_HALF_UP);
         return bd.doubleValue();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="[toInteger]">
     public static int toInteger(double value) {
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(0, BigDecimal.ROUND_HALF_UP);
         return bd.intValue();
     }
+    //</editor-fold>
 }
