@@ -66,7 +66,7 @@ public class ConvertUtils {
 
     public static String convertStringToSafeFilename(String s) {
         String ret = s.toLowerCase();
-        ret = ret.replaceAll("[\\\\\\/\\:\\*\\?\\\"\\<\\>\\|\\s]", "-");
+        ret = ret.replaceAll("[\\\\\\/\\:\\*\\?\\\"\\<\\>\\|\\s\\,]", "-");
         return ret;
     }
 
