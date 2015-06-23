@@ -9,7 +9,9 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Project: arch
@@ -75,6 +77,13 @@ public class ConvertUtils {
         PrintWriter pw = new PrintWriter(sw);
         t.printStackTrace(pw);
         return sw.toString();
+    }
+
+    public String getFormattedNumber(Double number, int decimals, Locale locale) {
+        NumberFormat nf = NumberFormat.getInstance(locale);
+        nf.setMaximumFractionDigits(decimals);
+        nf.setMinimumFractionDigits(decimals);
+        return nf.format(number);
     }
     //</editor-fold>
 
