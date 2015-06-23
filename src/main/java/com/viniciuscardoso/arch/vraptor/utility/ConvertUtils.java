@@ -79,7 +79,7 @@ public class ConvertUtils {
         return sw.toString();
     }
 
-    public String getFormattedNumber(Double number, int decimals, Locale locale) {
+    public static String getFormattedNumber(Double number, int decimals, Locale locale) {
         NumberFormat nf = NumberFormat.getInstance(locale);
         nf.setMaximumFractionDigits(decimals);
         nf.setMinimumFractionDigits(decimals);
