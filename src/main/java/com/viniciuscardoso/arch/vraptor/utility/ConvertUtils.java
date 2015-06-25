@@ -103,7 +103,7 @@ public class ConvertUtils {
     //</editor-fold>
 
     //<editor-fold desc="[toLocalDate]">
-    public static LocalDate parseDateSavingTimeProof(String maybeDate, String format) throws Exception {
+    public static LocalDate parseDateSavingTimeProof(String maybeDate, String format) {
         try {
             String dateStripped = maybeDate.split(" ")[0] + " 01:00:00";
             String formatStripped = format.split(" ")[0] + " HH:mm:ss";
