@@ -110,7 +110,7 @@ public class ConvertUtils {
             DateTimeFormatter fmt = DateTimeFormat.forPattern(formatStripped);
             DateTime dtTime = fmt.parseDateTime(dateStripped);
             return dtTime.toLocalDate();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             throw new UtilityException("Data inválida!");
         }
 

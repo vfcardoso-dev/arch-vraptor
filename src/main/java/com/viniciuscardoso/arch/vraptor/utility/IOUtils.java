@@ -4,7 +4,6 @@ import br.com.caelum.vraptor.interceptor.download.Download;
 import br.com.caelum.vraptor.interceptor.download.FileDownload;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import com.viniciuscardoso.arch.vraptor.exception.UtilityException;
-import org.hamcrest.Matchers;
 
 import java.io.*;
 import java.net.SocketException;
@@ -17,10 +16,6 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import static ch.lambdaj.Lambda.on;
-import static ch.lambdaj.Lambda.select;
-import static ch.lambdaj.Lambda.selectFirst;
 
 /**
  * Project: arch
@@ -72,7 +67,7 @@ public class IOUtils {
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-        } catch (UtilityException e) {
+        } catch (SecurityException e) {
             throw new UtilityException("Não foi possível criar o diretório.", e);
         }
     }
@@ -97,11 +92,11 @@ public class IOUtils {
             uploadedFile.getFile().close();
 
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("Arquivo não encontrado!");
+            throw new UtilityException("Arquivo não encontrado!", e);
         } catch (SocketException e) {
-            throw new SocketException("Falha no envio do arquivo!");
+            throw new UtilityException("Falha no envio do arquivo!", e);
         } catch (IOException e) {
-            throw new IOException("Não foi possível enviar o arquivo!");
+            throw new UtilityException("Não foi possível enviar o arquivo!", e);
         } finally {
             if (fileToWrite != null) fileToWrite.close();
         }
@@ -110,7 +105,7 @@ public class IOUtils {
     public static boolean deleteFile(File file) {
         try {
             return file.delete();
-        } catch (UtilityException e) {
+        } catch (SecurityException e) {
             throw new UtilityException("Não foi possível excluir o arquivo.", e);
         }
     }
@@ -126,7 +121,7 @@ public class IOUtils {
 
             // agora o diretorio esta vazio, delete ele!
             return dir.delete();
-        } catch (UtilityException e) {
+        } catch (SecurityException e) {
             throw new UtilityException("Não foi possível apagar o diretório.",e);
         }
     }
