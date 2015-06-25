@@ -134,4 +134,27 @@ public class ConvertUtils {
         return bd.intValue();
     }
     //</editor-fold>
+
+    @SuppressWarnings("unchecked")
+    public static <T> T convertTo(Object object, Class<T> type) {
+        try {
+            if(object == null) {
+                return null;
+            } else if (type.equals(String.class)) {
+                return (T) String.valueOf(object);
+            } else if (type.equals(Double.class)) {
+                return (T) Double.valueOf(String.valueOf(object));
+            } else if (type.equals(LocalDateTime.class)) {
+                return (T) ConvertUtils.parseDate(String.valueOf(object), "yyyy-MM-dd HH:mm:ss.S");
+            } else if (type.equals(LocalDate.class)) {
+                return (T) ConvertUtils.parseDateSavingTimeProof(String.valueOf(object), "yyyy-MM-dd HH:mm:ss.S");
+            } else if (type.equals(Long.class)) {
+                return (T) Long.valueOf(String.valueOf(object));
+            } else {
+                throw new UtilityException("Tipo não mapeado no método de conversão");
+            }
+        } catch (NumberFormatException | UtilityException e) {
+            throw new UtilityException("Não foi possível converter", e);
+        }
+    }
 }
