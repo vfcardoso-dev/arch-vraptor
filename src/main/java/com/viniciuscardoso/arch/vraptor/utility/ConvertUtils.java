@@ -95,7 +95,7 @@ public class ConvertUtils {
             DateTimeFormatter fmt = DateTimeFormat.forPattern(format);
             DateTime dtTime = fmt.parseDateTime(maybeDate);
             dt = dtTime.toLocalDateTime();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             throw new UtilityException("Data inválida!");
         }
         return dt;
