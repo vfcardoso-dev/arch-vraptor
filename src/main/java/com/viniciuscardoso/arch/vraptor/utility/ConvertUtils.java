@@ -1,5 +1,6 @@
 package com.viniciuscardoso.arch.vraptor.utility;
 
+import com.viniciuscardoso.arch.vraptor.exception.UtilityException;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -88,14 +89,14 @@ public class ConvertUtils {
     //</editor-fold>
 
     //<editor-fold desc="[toLocalDateTime]">
-    public static LocalDateTime parseDate(String maybeDate, String format) throws Exception {
+    public static LocalDateTime parseDate(String maybeDate, String format) {
         LocalDateTime dt;
         try {
             DateTimeFormatter fmt = DateTimeFormat.forPattern(format);
             DateTime dtTime = fmt.parseDateTime(maybeDate);
             dt = dtTime.toLocalDateTime();
         } catch (Exception e) {
-            throw new Exception("Data inválida!");
+            throw new UtilityException("Data inválida!");
         }
         return dt;
     }
@@ -109,8 +110,8 @@ public class ConvertUtils {
             DateTimeFormatter fmt = DateTimeFormat.forPattern(formatStripped);
             DateTime dtTime = fmt.parseDateTime(dateStripped);
             return dtTime.toLocalDate();
-        } catch (Exception var5) {
-            throw new Exception("Data inválida!");
+        } catch (Exception e) {
+            throw new UtilityException("Data inválida!");
         }
 
     }
