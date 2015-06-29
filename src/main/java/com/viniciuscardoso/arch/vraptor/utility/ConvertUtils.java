@@ -144,6 +144,8 @@ public class ConvertUtils {
                 return (T) String.valueOf(object);
             } else if (type.equals(Double.class)) {
                 return (T) Double.valueOf(String.valueOf(object));
+            } else if (type.equals(Integer.class)) {
+                return (T) Integer.valueOf(String.valueOf(object));
             } else if (type.equals(LocalDateTime.class)) {
                 return (T) ConvertUtils.parseDate(String.valueOf(object), "yyyy-MM-dd HH:mm:ss.S");
             } else if (type.equals(LocalDate.class)) {
