@@ -150,6 +150,8 @@ public class ConvertUtils {
                 return (T) ConvertUtils.parseDateSavingTimeProof(String.valueOf(object), "yyyy-MM-dd HH:mm:ss.S");
             } else if (type.equals(Long.class)) {
                 return (T) Long.valueOf(String.valueOf(object));
+            } else if (type.equals(Boolean.class)) {
+                return (T) Boolean.valueOf(String.valueOf(object));
             } else {
                 throw new UtilityException("Tipo não mapeado no método de conversão");
             }
