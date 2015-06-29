@@ -151,7 +151,7 @@ public class ConvertUtils {
             } else if (type.equals(Long.class)) {
                 return (T) Long.valueOf(String.valueOf(object));
             } else if (type.equals(Boolean.class)) {
-                return (T) Boolean.valueOf(String.valueOf(object));
+                return (T) Boolean.valueOf(String.valueOf(object).trim());
             } else {
                 throw new UtilityException("Tipo não mapeado no método de conversão");
             }
