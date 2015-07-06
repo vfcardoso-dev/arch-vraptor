@@ -155,7 +155,7 @@ public class ConvertUtils {
             } else if (type.equals(Boolean.class)) {
                 return (T) Boolean.valueOf(String.valueOf(object).trim());
             } else {
-                throw new UtilityException("Tipo não mapeado no método de conversão");
+                throw new UtilityException("Tipo não mapeado no método de conversão: [" + type.getSimpleName() + "]");
             }
         } catch (NumberFormatException | UtilityException e) {
             throw new UtilityException("Não foi possível converter", e);
