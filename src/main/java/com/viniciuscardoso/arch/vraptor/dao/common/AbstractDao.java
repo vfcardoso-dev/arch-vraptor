@@ -49,7 +49,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
             session.getTransaction().begin();
             session.save(entity);
             session.getTransaction().commit();
-            logger.info("Objeto [" + this.getEntityName() + "] adicionado com id = " + String.valueOf(entity.getId()));
+            logger.info("Objeto [" + this.getEntityName() + "] adicionado com id " + String.valueOf(entity.getId()));
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             logger.info("Erro ao adicionar objeto. " + e.getMessage());
