@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.joda.time.LocalDateTime;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
 import java.util.List;
 
 import static ch.lambdaj.Lambda.join;
@@ -29,6 +30,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     private final Session session;
     private Class<T> classe;
 
+    @SuppressWarnings("unchecked")
     public AbstractAuditableDao(Session session, Class clazz) {
         this.session = session;
         this.classe = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -45,6 +47,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     //</editor-fold>
 
     //<editor-fold desc="[Create]">
+    @SuppressWarnings("unchecked")
     public void save(T entity, A creator) {
         try {
             if (entity instanceof IAuditable) {
@@ -62,14 +65,14 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void save(List<T> lista, A creator) {
         try {
             session.getTransaction().begin();
-            for (int i = 0; i < lista.size(); i++) {
-                T item = lista.get(i);
+            for (T item : lista) {
                 if (item instanceof IAuditable) {
-                    ((IAuditable<A>)item).setCreatedAt(new LocalDateTime());
-                    ((IAuditable<A>)item).setCreatedBy(creator);
+                    ((IAuditable<A>) item).setCreatedAt(new LocalDateTime());
+                    ((IAuditable<A>) item).setCreatedBy(creator);
                 }
                 session.save(item);
             }
@@ -84,6 +87,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     //</editor-fold>
 
     //<editor-fold desc="[Retrieve]">
+    @SuppressWarnings("unchecked")
     public List<T> list() {
         try {
             return session.createQuery("from " + this.classe.getName()).list();
@@ -92,6 +96,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
         }
     }
 
+    @SuppressWarnings("unchecked")
     public T getById(Long id) {
         try {
             Query q = session.createQuery("from " + this.classe.getName() + " where id = :id");
@@ -102,16 +107,22 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<T> getList(List<Long> ids) {
         try {
-            Query q = session.createQuery("from " + this.classe.getName() + " where id in (:ids)");
-            q.setParameterList("ids", ids);
-            return q.list();
+            if (ids != null && ids.size() > 0) {
+                Query q = session.createQuery("from " + this.classe.getName() + " where id in (:ids)");
+                q.setParameterList("ids", ids);
+                return q.list();
+            } else {
+                return Collections.emptyList();
+            }
         } catch (HibernateException e) {
             throw new DaoException("Não foi possível carregar objeto [" + this.getEntityName() + "].", e);
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<T> listSorted(String... listFields) {
         String q = "from " + this.classe.getName();
         if (listFields.length > 0) q += " order by " + join(listFields, ", ");
@@ -125,6 +136,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     //</editor-fold>
 
     //<editor-fold desc="[Update]">
+    @SuppressWarnings("unchecked")
     public void update(T entity, A changer) {
         try {
             if (entity instanceof IAuditable) {
