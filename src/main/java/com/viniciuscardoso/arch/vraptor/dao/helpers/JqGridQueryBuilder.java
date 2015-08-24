@@ -78,7 +78,7 @@ public abstract class JqGridQueryBuilder {
             } else if (ValidationUtils.containsIgnoreCase(sField, "DT")) {
                 final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
                 final LocalDate dt = dtf.parseDateTime(sString).toLocalDate();
-                q.setParameter("param", dt);
+                q.setParameter("param", dt.toString("yyyy-MM-dd"));
             } else if (ValidationUtils.containsIgnoreCase(sField, "DT_TM")) {
                 final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
                 final LocalDateTime dttm = dtf.parseDateTime(sString).toLocalDateTime();
@@ -98,7 +98,7 @@ public abstract class JqGridQueryBuilder {
                 } else if (ValidationUtils.containsIgnoreCase(rule.getField(), "DT")) {
                     final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
                     final LocalDate dt = dtf.parseDateTime(rule.getData()).toLocalDate();
-                    q.setParameter(paramIdx, dt);
+                    q.setParameter(paramIdx, dt.toString("yyyy-MM-dd"));
                 } else if (ValidationUtils.containsIgnoreCase(rule.getField(),"DT_TM")) {
                     final DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
                     final LocalDateTime dttm = dtf.parseDateTime(rule.getData()).toLocalDateTime();
