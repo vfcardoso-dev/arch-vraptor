@@ -88,7 +88,7 @@ public abstract class JqGridQueryBuilder {
             } else {
                 q.setParameter("param", sString);
             }
-        } else if (filters != null) {
+        } else if (filters != null && filters.getRules().size() > 0) {
             JqGridRules rule;
             for(int i = 0; i < filters.getRules().size(); i++) {
                 rule = filters.getRules().get(i);

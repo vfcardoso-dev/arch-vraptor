@@ -35,7 +35,7 @@ public class JqGridQueryBuilderFirebird extends JqGridQueryBuilder implements IJ
         }
         if (sField != null && sOper != null) {
             consulta.append("and ").append(sField).append(this.convertSearchOper(sOper)).append(" :param ");
-        } else if (filters != null) {
+        } else if (filters != null && filters.getRules().size() > 0) {
             JqGridRules rule;
             consulta.append("and ");
             for (int i = 0; i < filters.getRules().size(); i++) {
@@ -82,7 +82,7 @@ public class JqGridQueryBuilderFirebird extends JqGridQueryBuilder implements IJ
             } else {
                 super.addCustomParametersToQuery(q, sField, sString, sOper);
             }
-        } else if (filters != null) {
+        } else if (filters != null && filters.getRules().size() > 0) {
             JqGridRules rule;
             for (int i = 0; i < filters.getRules().size(); i++) {
                 rule = filters.getRules().get(i);

@@ -3,12 +3,7 @@ package com.viniciuscardoso.arch.vraptor.dao.helpers;
 import br.com.caelum.vraptor.ioc.Component;
 import com.viniciuscardoso.arch.vraptor.controller.json.JqGridFilters;
 import com.viniciuscardoso.arch.vraptor.controller.json.JqGridRules;
-import org.hibernate.CacheMode;
 import org.hibernate.Query;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -42,7 +37,7 @@ public class JqGridQueryBuilderSQLServer extends JqGridQueryBuilder implements I
 
         if (sField != null && sOper != null) {
             consulta.append("and ").append(sField).append(convertSearchOper(sOper)).append(" :param ");
-        } else if (filters != null){
+        } else if (filters != null && filters.getRules().size() > 0){
             JqGridRules rule;
             consulta.append("and ");
             for (int i = 0; i < filters.getRules().size(); i++) {
