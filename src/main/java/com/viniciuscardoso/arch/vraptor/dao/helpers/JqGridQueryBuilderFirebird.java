@@ -40,13 +40,23 @@ public class JqGridQueryBuilderFirebird extends JqGridQueryBuilder implements IJ
             JqGridRules rule;
             for (int i = 0; i < filters.getRules().size(); i++) {
                 rule = filters.getRules().get(i);
-                if (rule.getField().toLowerCase().contains("dt") && StringUtils.countOccurrencesOf(rule.getData(),"/") == 2 && rule.getData().length() > 7) {
-                    consulta.append("and ").append(rule.getField())
-                            .append(convertSearchOper(rule.getOp()))
-                            .append(" :param").append(String.valueOf(i)).append(" ");
-                    if (i < filters.getRules().size() - 1) {
+
+                if (rule.getField().toLowerCase().contains("dt")) {
+                    if (StringUtils.countOccurrencesOf(rule.getData(),"/") == 2 && rule.getData().length() > 7) {
+                        if (i < filters.getRules().size()) {
+                            consulta.append(" ").append(filters.getGroupOp()).append(" ");
+                        }
+                        consulta.append(rule.getField())
+                                .append(convertSearchOper(rule.getOp()))
+                                .append(" :param").append(String.valueOf(i)).append(" ");
+                    }
+                } else {
+                    if (i < filters.getRules().size()) {
                         consulta.append(" ").append(filters.getGroupOp()).append(" ");
                     }
+                    consulta.append(rule.getField())
+                            .append(convertSearchOper(rule.getOp()))
+                            .append(" :param").append(String.valueOf(i)).append(" ");
                 }
             }
         }
