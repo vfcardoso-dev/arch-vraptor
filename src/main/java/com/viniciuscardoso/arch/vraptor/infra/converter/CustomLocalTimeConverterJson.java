@@ -2,7 +2,7 @@ package com.viniciuscardoso.arch.vraptor.infra.converter;
 
 import br.com.caelum.vraptor.ioc.Component;
 import com.thoughtworks.xstream.converters.SingleValueConverter;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 /**
  * Project: trf-main
@@ -11,18 +11,17 @@ import org.joda.time.LocalDate;
  * Time: 12:12
  */
 @Component
-public class CustomLocalDateConverterJson implements SingleValueConverter {
+public class CustomLocalTimeConverterJson implements SingleValueConverter {
 
     @Override
     public String toString(Object value) {
-        LocalDate d = new LocalDate(value);
-        return d.toString("dd/MM/yyyy");
-
+        LocalTime t = new LocalTime(value);
+        return t.toString("HH:mm");
     }
 
     @SuppressWarnings("rawtypes")
     public boolean canConvert(Class clazz) {
-        return LocalDate.class.isAssignableFrom(clazz);
+        return LocalTime.class.isAssignableFrom(clazz);
     }
 
     @Override
