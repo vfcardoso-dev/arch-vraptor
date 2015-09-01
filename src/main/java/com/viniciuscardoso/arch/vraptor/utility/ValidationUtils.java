@@ -1,9 +1,12 @@
 package com.viniciuscardoso.arch.vraptor.utility;
 
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Set;
@@ -65,5 +68,17 @@ public class ValidationUtils {
             }
         }
         return resultado;
+    }
+
+    public static boolean isValidDate(String maybeDate, String format) {
+        try {
+            String dateStripped = maybeDate.split(" ")[0] + " 01:00:00";
+            String formatStripped = format.split(" ")[0] + " HH:mm:ss";
+            DateTimeFormatter fmt = DateTimeFormat.forPattern(formatStripped);
+            DateTime dtTime = fmt.parseDateTime(dateStripped);
+            return dtTime.toLocalDate() != null;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }
