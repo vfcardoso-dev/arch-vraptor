@@ -225,7 +225,8 @@ public class IOUtils {
                 // Open input stream to packed file
                 FileInputStream fis = new FileInputStream(dirElementPath);
 
-                byte[] buf = new byte[1024];
+//                byte[] buf = new byte[1024];
+                byte[] buf = new byte[8192];
                 int len;
                 while ((len = fis.read(buf)) > 0) {
                     zos.write(buf, 0, len);
