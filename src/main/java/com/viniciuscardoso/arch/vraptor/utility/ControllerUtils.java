@@ -24,6 +24,7 @@ public class ControllerUtils {
     public static void defineSuccessMessage(Result result, String objectActionText) {
         result.include("alerta", objectActionText + " com sucesso!");
         result.include("classeAlerta", "alert-success");
+        result.include("toastrType", "success");
     }
     
     /**
@@ -39,6 +40,7 @@ public class ControllerUtils {
             result.include("alerta", objectActionText);
         }
         result.include("classeAlerta", "alert-success");
+        result.include("toastrType", "success");
     }
     
     /**
@@ -50,6 +52,7 @@ public class ControllerUtils {
     public static void defineSuccessMessage(Result result, String objectActionText, String furtherAction) {
         result.include("alerta", objectActionText + " com sucesso! " + furtherAction);
         result.include("classeAlerta", "alert-success");
+        result.include("toastrType", "success");
     }
 
     /**
@@ -61,6 +64,7 @@ public class ControllerUtils {
         result.include("alerta", (e.getMessage() == null || e.getMessage().equals("")) ? "NullPointerException" : e.getMessage());
         if (e.getCause() != null) result.include("causa", " Causa: " + e.getCause());
         result.include("classeAlerta", "alert-danger");
+        result.include("toastrType", "error");
     }
     
     /**
@@ -71,17 +75,18 @@ public class ControllerUtils {
     public static void defineErrorMessage(Result result, String msg) {
         result.include("alerta", msg);
         result.include("classeAlerta", "alert-danger");
+        result.include("toastrType", "error");
     }
 
     /**
      * Configura mensagem de warning de uma requisição
      * @param result Obsjeto result do Vraptor
-     * @param e Exception lançada
      * @param msg String com mensagem de warning
      */
     public static void defineWarningMessage(Result result, String msg) {
         result.include("alerta", msg);
         result.include("classeAlerta", "alert-warning");
+        result.include("toastrType", "warning");
     }
     
     /**
