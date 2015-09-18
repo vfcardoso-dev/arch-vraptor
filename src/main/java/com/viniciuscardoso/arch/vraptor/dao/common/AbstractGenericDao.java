@@ -9,6 +9,7 @@ import org.hibernate.Session;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -107,6 +108,21 @@ public abstract class AbstractGenericDao<T extends AbstractGenericEntity> {
 
     @SuppressWarnings("unchecked")
     public List<T> getList(ArrayList<Integer> ids) { //clash type, same erasure...
+        try {
+            if (ids != null && ids.size() > 0) {
+                Query q = session.createQuery("from " + this.classe.getName() + " where id in (:ids)");
+                q.setParameterList("ids", ids);
+                return q.list();
+            } else {
+                return Collections.emptyList();
+            }
+        } catch (HibernateException e) {
+            throw new DaoException("Não foi possível carregar objeto [" + this.getEntityName() + "].", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> getList(Collection<String> ids) { //clash type, same erasure...
         try {
             if (ids != null && ids.size() > 0) {
                 Query q = session.createQuery("from " + this.classe.getName() + " where id in (:ids)");
