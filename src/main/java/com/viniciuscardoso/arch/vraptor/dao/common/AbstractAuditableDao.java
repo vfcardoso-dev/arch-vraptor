@@ -4,6 +4,7 @@ import com.viniciuscardoso.arch.vraptor.domain.common.AbstractEntity;
 import com.viniciuscardoso.arch.vraptor.domain.interfaces.IActorAudited;
 import com.viniciuscardoso.arch.vraptor.domain.interfaces.IAuditable;
 import com.viniciuscardoso.arch.vraptor.exception.DaoException;
+import com.viniciuscardoso.arch.vraptor.utility.ConvertUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -132,6 +133,9 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
         } catch (HibernateException e) {
             throw new DaoException("Não foi possível recuperar objetos [" + this.getEntityName() + "].", e);
         }
+    }
+    public int countAll() {
+        return ConvertUtils.convertTo(this.session.createQuery("select count(*) from " + this.classe.getName()).uniqueResult(), Integer.class);
     }
     //</editor-fold>
 
