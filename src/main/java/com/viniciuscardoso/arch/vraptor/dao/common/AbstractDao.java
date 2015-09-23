@@ -29,7 +29,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
     private Class<T> classe;
 
     @SuppressWarnings("unchecked")
-    public AbstractDao(Session session, Class clazz) {
+    public AbstractDao(Session session, Class<? extends AbstractDao<T>> clazz) {
         this.session = session;
         this.classe = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		this.logger = Logger.getLogger(clazz);

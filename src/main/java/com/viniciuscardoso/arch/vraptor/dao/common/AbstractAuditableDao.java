@@ -32,7 +32,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     private Class<T> classe;
 
     @SuppressWarnings("unchecked")
-    public AbstractAuditableDao(Session session, Class clazz) {
+    public AbstractAuditableDao(Session session, Class<? extends AbstractAuditableDao<T, A>> clazz) {
         this.session = session;
         this.classe = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		this.logger = Logger.getLogger(clazz);

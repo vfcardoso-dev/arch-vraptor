@@ -31,7 +31,7 @@ public abstract class AbstractGenericDao<T extends AbstractGenericEntity> {
     private Logger logger;
 
     @SuppressWarnings("unchecked")
-    public AbstractGenericDao(Session session, Class clazz) {
+    public AbstractGenericDao(Session session, Class<? extends AbstractGenericDao<T>> clazz) {
         this.session = session;
         this.classe = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.logger = Logger.getLogger(clazz);
