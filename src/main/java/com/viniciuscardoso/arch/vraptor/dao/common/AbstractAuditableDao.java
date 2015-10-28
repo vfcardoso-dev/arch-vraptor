@@ -143,7 +143,10 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     @SuppressWarnings("unchecked")
     public void update(T entity, A changer) {
         try {
+            T oldEntity = (T) session.get(this.classe, entity.getId());
             if (entity instanceof IAuditable) {
+                ((IAuditable<A>)entity).setCreatedAt(((IAuditable<A>)oldEntity).getCreatedAt());
+                ((IAuditable<A>)entity).setCreatedBy(((IAuditable<A>)oldEntity).getCreatedBy());
                 ((IAuditable<A>)entity).setChangedAt(new LocalDateTime());
                 ((IAuditable<A>)entity).setChangedBy(changer);
             }
