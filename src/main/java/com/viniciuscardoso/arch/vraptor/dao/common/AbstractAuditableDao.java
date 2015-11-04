@@ -145,8 +145,12 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
         try {
             T oldEntity = (T) session.get(this.classe, entity.getId());
             if (entity instanceof IAuditable) {
-                ((IAuditable<A>)entity).setCreatedAt(((IAuditable<A>)oldEntity).getCreatedAt());
-                ((IAuditable<A>)entity).setCreatedBy(((IAuditable<A>)oldEntity).getCreatedBy());
+                if (oldEntity != null && ((IAuditable<A>)oldEntity).getCreatedAt() != null) {
+                    ((IAuditable<A>)entity).setCreatedAt(((IAuditable<A>) oldEntity).getCreatedAt());
+                }
+                if (oldEntity != null && ((IAuditable<A>)oldEntity).getCreatedBy() != null) {
+                    ((IAuditable<A>)entity).setCreatedBy(((IAuditable<A>) oldEntity).getCreatedBy());
+                }
                 ((IAuditable<A>)entity).setChangedAt(new LocalDateTime());
                 ((IAuditable<A>)entity).setChangedBy(changer);
             }
