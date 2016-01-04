@@ -1,12 +1,7 @@
 package com.viniciuscardoso.arch.vraptor.utility;
 
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.view.Results;
-import com.viniciuscardoso.arch.vraptor.controller.json.JqGrid;
-import com.viniciuscardoso.arch.vraptor.controller.json.JqGridRow;
 import org.joda.time.LocalDate;
-
-import java.util.ArrayList;
 
 /**
  * Project: arch
@@ -91,7 +86,7 @@ public class ControllerUtils {
     
     /**
      * Define no result duas datas para uso por um seletor de período,
-     * sendo que a data1 é agora, e a data2 é agora menos 3 meses.
+     * sendo que a data2 é agora, e a data1 é agora menos 3 meses.
      * @param result Objeto result do Vraptor
      */
     public static void defineTodayMinusThreeMonths(Result result, String pattern) {
@@ -100,22 +95,22 @@ public class ControllerUtils {
 
     /**
      * Define no result duas datas para uso por um seletor de período,
-     * sendo que a data1 é agora, e a data2 é agora menos x meses.
+     * sendo que a data2 é agora, e a data1 é agora menos x meses.
      * @param result Objeto result do Vraptor
      */
     public static void defineTodayMinusMonths(Result result, Integer minusMonths, String pattern) {
-        result.include("data1", new LocalDate().toString(pattern));
-        result.include("data2", new LocalDate().minusMonths(minusMonths).toString(pattern));
+        result.include("data1", new LocalDate().minusMonths(minusMonths).toString(pattern));
+        result.include("data2", new LocalDate().toString(pattern));
     }
 
     /**
      * Define no result duas datas para uso por um seletor de período,
-     * sendo que a data1 é agora, e a data2 é agora menos x semanas.
+     * sendo que a data2 é agora, e a data1 é agora menos x semanas.
      * @param result Objeto result do Vraptor
      */
     public static void defineTodayMinusWeeks(Result result, Integer minusWeeks, String pattern) {
-        result.include("data1", new LocalDate().toString(pattern));
-        result.include("data2", new LocalDate().minusWeeks(minusWeeks).toString(pattern));
+        result.include("data1", new LocalDate().minusWeeks(minusWeeks).toString(pattern));
+        result.include("data2", new LocalDate().toString(pattern));
     }
     
     /**
@@ -137,27 +132,5 @@ public class ControllerUtils {
     public static void defineCurrentMonthFirstAndLastDays(Result result, String pattern) {
         result.include("data1", new LocalDate().dayOfMonth().withMinimumValue().toString(pattern));
         result.include("data2", new LocalDate().dayOfMonth().withMaximumValue().toString(pattern));
-    }
-
-    /**
-     * Retorna o json formatado para o JqGrid contendo dados para montar grid
-     * @param linhas Registros da consulta
-     * @param rows número de linhas selecionadas para exibir no grid
-     * @param page página atual (contada a partir de 1)
-     * @param result Objeto result do Vraptor
-     */
-	@Deprecated
-    public static void gerarJqGridJsonResult(ArrayList<JqGridRow> linhas, int rows, int page, Result result) {
-        JqGrid j = new JqGrid();
-        int inicioLista, fimLista;
-        inicioLista = rows * (page - 1);
-        fimLista = ((rows * page) > linhas.size()) ? linhas.size() : rows * page;
-
-        j.setPage(String.valueOf(page));
-        j.setRecords(String.valueOf(linhas.size()));
-        j.setRows(new ArrayList<>(linhas.subList(inicioLista, fimLista)));
-        j.setTotal(((Math.ceil(linhas.size() / rows) == 0) ? 1 : ((int) Math.ceil((double) linhas.size() / rows))));
-
-        result.use(Results.json()).withoutRoot().from(j).recursive().serialize();
     }
 }
