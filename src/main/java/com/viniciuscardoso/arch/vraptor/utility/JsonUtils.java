@@ -38,7 +38,7 @@ public class JsonUtils {
 		e.printStackTrace(pw);
 		String stackTrace = sw.getBuffer().toString();
 
-		result.use(Results.http()).body(e.getMessage() + ":::" + stackTrace);
+		result.use(Results.http()).body(e.getMessage() + ":::" + stackTrace).setStatusCode(500);
 	}
 
 	/**
