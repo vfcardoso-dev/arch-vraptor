@@ -183,7 +183,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     public void forceUpdate(T entity) {
         try {
             session.getTransaction().begin();
-            session.merge(entity);
+            session.update(entity);
             session.getTransaction().commit();
             logger.info("Objeto [" + this.getEntityName() + "] atualizado com id = " + String.valueOf(entity.getId()));
         } catch (HibernateException e) {
