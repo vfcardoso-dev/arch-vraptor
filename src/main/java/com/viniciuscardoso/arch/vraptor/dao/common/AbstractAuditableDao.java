@@ -85,6 +85,20 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
             throw new DaoException("Não foi possível criar o objeto [" + this.getEntityName() + "].", e);
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public void forceSave(T entity) {
+        try {
+            session.getTransaction().begin();
+            session.save(entity);
+            session.getTransaction().commit();
+            logger.info("Objeto [" + this.getEntityName() + "] adicionado com id = " + String.valueOf(entity.getId()));
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            logger.info("Erro ao adicionar objeto. " + e.getMessage());
+            throw new DaoException("Não foi possível criar o objeto [" + this.getEntityName() + "].", e);
+        }
+    }
     //</editor-fold>
 
     //<editor-fold desc="[Retrieve]">
@@ -154,6 +168,20 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
                 ((IAuditable<A>)entity).setChangedAt(new LocalDateTime());
                 ((IAuditable<A>)entity).setChangedBy(changer);
             }
+            session.getTransaction().begin();
+            session.merge(entity);
+            session.getTransaction().commit();
+            logger.info("Objeto [" + this.getEntityName() + "] atualizado com id = " + String.valueOf(entity.getId()));
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            logger.info("Erro ao atualizar objeto. " + e.getMessage());
+            throw new DaoException("Não foi possível atualizar o objeto [" + this.getEntityName() + "].", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void forceUpdate(T entity) {
+        try {
             session.getTransaction().begin();
             session.merge(entity);
             session.getTransaction().commit();
