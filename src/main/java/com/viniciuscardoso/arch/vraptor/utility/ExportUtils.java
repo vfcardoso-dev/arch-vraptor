@@ -29,6 +29,7 @@ public class ExportUtils {
         Document document = new Document();
         PdfWriter.getInstance(document, out);
         document.open();
+
         HTMLWorker hw = new HTMLWorker(document);
         hw.parse(new InputStreamReader(input));
         document.close();
