@@ -2,10 +2,13 @@ package com.viniciuscardoso.arch.vraptor.utility;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Project: arch
@@ -24,14 +27,11 @@ public class ExportUtils {
         html2pdf(new ByteArrayInputStream(doc.html().getBytes()), out);
     }
 
-    @SuppressWarnings("deprecation")
     public static void html2pdf(InputStream input, OutputStream out) throws DocumentException, IOException {
         Document document = new Document();
-        PdfWriter.getInstance(document, out);
+        PdfWriter writer = PdfWriter.getInstance(document, out);
         document.open();
-
-        HTMLWorker hw = new HTMLWorker(document);
-        hw.parse(new InputStreamReader(input));
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, input);
         document.close();
     }
 }
