@@ -84,12 +84,35 @@ public class IOUtils {
         return finalFileName + extension;
     }
 
-    public static void writeFile(String filePath, String fileName, UploadedFile uploadedFile) throws FileNotFoundException, SocketException, IOException {
+    public static String getUniqueFileName(String extension) {
+        String finalFileName = UUID.randomUUID().toString();
+        return finalFileName + extension;
+    }
+
+    public static void writeFile(String filePath, String fileName, UploadedFile uploadedFile) throws IOException {
         FileOutputStream fileToWrite = null;
         try {
             fileToWrite = new FileOutputStream(new File(filePath, fileName));
             org.apache.commons.io.IOUtils.copyLarge(uploadedFile.getFile(), fileToWrite);
             uploadedFile.getFile().close();
+
+        } catch (FileNotFoundException e) {
+            throw new UtilityException("Arquivo não encontrado!", e);
+        } catch (SocketException e) {
+            throw new UtilityException("Falha no envio do arquivo!", e);
+        } catch (IOException e) {
+            throw new UtilityException("Não foi possível enviar o arquivo!", e);
+        } finally {
+            if (fileToWrite != null) fileToWrite.close();
+        }
+    }
+
+    public static void writeFile(String filePath, String fileName, InputStream inputStream) throws IOException {
+        FileOutputStream fileToWrite = null;
+        try {
+            fileToWrite = new FileOutputStream(new File(filePath, fileName));
+            org.apache.commons.io.IOUtils.copyLarge(inputStream, fileToWrite);
+            inputStream.close();
 
         } catch (FileNotFoundException e) {
             throw new UtilityException("Arquivo não encontrado!", e);
@@ -151,6 +174,21 @@ public class IOUtils {
         fos.close();
         inCh.close();
         outCh.close();
+    }
+
+    public static String writeInputStreamToDisk(InputStream inputStream, String extension, String fileDir, String oldFileName) throws Exception {
+        String newFilename = IOUtils.getUniqueFileName(extension);
+        File oldFile = null;
+        if (oldFileName != null) {
+            oldFile = new File(fileDir, oldFileName);
+        }
+            IOUtils.createDir(fileDir);
+            IOUtils.writeFile(fileDir, newFilename, inputStream);
+
+        if (oldFile != null) {
+            IOUtils.deleteFile(oldFile);
+        }
+        return newFilename;
     }
 
     public static String writeUploadToDisk(UploadedFile uplFile, String resourceKey, String resourceFile, String oldFileName) throws Exception {
