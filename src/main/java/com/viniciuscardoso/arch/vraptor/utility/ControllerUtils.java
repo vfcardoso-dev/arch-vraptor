@@ -56,7 +56,7 @@ public class ControllerUtils {
      * @param e Exception lançada
      */
     public static void defineErrorMessage(Result result, Exception e) {
-        result.include("alerta", e.toString());
+        result.include("alerta", e.getClass().getSimpleName() + ": " + e.getMessage());
         if (e.getCause() != null) result.include("causa", " Causa: " + e.getCause());
         result.include("classeAlerta", "alert-danger");
         result.include("toastrType", "error");
