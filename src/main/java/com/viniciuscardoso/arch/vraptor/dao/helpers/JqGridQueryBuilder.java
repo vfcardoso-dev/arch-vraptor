@@ -112,6 +112,7 @@ public abstract class JqGridQueryBuilder {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected List<Object[]> executeQuery(Query q) {
         try {
             q.setCacheMode(CacheMode.REFRESH);
