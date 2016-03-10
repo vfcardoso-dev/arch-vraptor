@@ -10,7 +10,6 @@ import org.joda.time.LocalDate;
  * Time: 16:02
  */
 public class ControllerUtils {
-
     /**
      * Configura mensagem de sucesso de uma requisição
      * @param result Objeto Result do Vraptor
