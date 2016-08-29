@@ -208,6 +208,8 @@ public class IOUtils {
     }
 
     public static String writeUploadToDisk(UploadedFile uplFile, String fileDir, String oldFileName) throws Exception {
+        if (uplFile == null) return oldFileName; //quando não há alteração vinda do form.
+
         String newFilename = IOUtils.getUniqueFileName(uplFile);
         if (oldFileName != null) {
             File oldFile = new File(fileDir, oldFileName);
