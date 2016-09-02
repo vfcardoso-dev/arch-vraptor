@@ -19,7 +19,12 @@ public class DataTablesHelper<T> {
                                                          int length, int totalRegisters)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
-        List<Object[]> filteredList = rawObjectArray.subList(start, (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length));
+        List<Object[]> filteredList;
+        if (length == -1) { //se length == -1, traz todos os registros.
+            filteredList = rawObjectArray;
+        } else {
+            filteredList = rawObjectArray.subList(start, (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length));
+        }
         DataTables<T> dataTables = new DataTables<>();
         dataTables.setRecordsTotal(totalRegisters);
         dataTables.setRecordsFiltered(nullSearch ? totalRegisters : rawObjectArray.size());
@@ -34,7 +39,13 @@ public class DataTablesHelper<T> {
     public DataTables<T> getDatatablesFromRawObjectArray(List<Object[]> rawObjectArray, String search, int start, int length, int totalRegisters)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
-        List<Object[]> filteredList = rawObjectArray.subList(start, (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length));
+        List<Object[]> filteredList;
+        if (length == -1) { //se length == -1, traz todos os registros.
+            filteredList = rawObjectArray;
+        } else {
+            filteredList = rawObjectArray.subList(start, (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length));
+        }
+
         DataTables<T> dataTables = new DataTables<>();
         dataTables.setRecordsTotal(totalRegisters);
         dataTables.setRecordsFiltered(search == null ? totalRegisters : rawObjectArray.size());
