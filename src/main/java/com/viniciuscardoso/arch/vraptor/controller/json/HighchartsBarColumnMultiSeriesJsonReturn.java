@@ -12,8 +12,18 @@ import java.util.List;
 public class HighchartsBarColumnMultiSeriesJsonReturn {
     private String title;
     private String label;
-    private HighchartsBarColumnSeries series;
+    private List<HighchartsBarColumnSeries> series;
     private List<String> categories = new ArrayList<>(0);
+
+    public HighchartsBarColumnMultiSeriesJsonReturn() {
+    }
+
+    public HighchartsBarColumnMultiSeriesJsonReturn(String title, String label, List<HighchartsBarColumnSeries> series, List<String> categories) {
+        this.title = title;
+        this.label = label;
+        this.series = series;
+        this.categories = categories;
+    }
 
     public String getTitle() {
         return title;
@@ -31,11 +41,11 @@ public class HighchartsBarColumnMultiSeriesJsonReturn {
         this.label = label;
     }
 
-    public HighchartsBarColumnSeries getSeries() {
+    public List<HighchartsBarColumnSeries> getSeries() {
         return series;
     }
 
-    public void setSeries(HighchartsBarColumnSeries series) {
+    public void setSeries(List<HighchartsBarColumnSeries> series) {
         this.series = series;
     }
 
