@@ -1,9 +1,7 @@
 package com.viniciuscardoso.arch.vraptor.controller.json;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Project: logplan
@@ -14,7 +12,7 @@ import java.util.Map;
 public class HighchartsBarColumnMultiSeriesJsonReturn {
     private String title;
     private String label;
-    private Map<String, List<Double>> series = new HashMap<>(0);
+    private HighchartsBarColumnSeries series;
     private List<String> categories = new ArrayList<>(0);
 
     public String getTitle() {
@@ -33,11 +31,11 @@ public class HighchartsBarColumnMultiSeriesJsonReturn {
         this.label = label;
     }
 
-    public Map<String, List<Double>> getSeries() {
+    public HighchartsBarColumnSeries getSeries() {
         return series;
     }
 
-    public void setSeries(Map<String, List<Double>> series) {
+    public void setSeries(HighchartsBarColumnSeries series) {
         this.series = series;
     }
 
