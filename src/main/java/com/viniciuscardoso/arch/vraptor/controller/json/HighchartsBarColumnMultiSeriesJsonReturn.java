@@ -12,7 +12,7 @@ import java.util.List;
 public class HighchartsBarColumnMultiSeriesJsonReturn {
     private String title;
     private String label;
-    private List<HighchartsBarColumnSeries> series;
+    private List<HighchartsBarColumnSeries> series = new ArrayList<>(0);
     private List<String> categories = new ArrayList<>(0);
 
     public HighchartsBarColumnMultiSeriesJsonReturn() {
