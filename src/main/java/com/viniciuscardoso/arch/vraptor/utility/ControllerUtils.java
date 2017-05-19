@@ -132,4 +132,17 @@ public class ControllerUtils {
         result.include("data1", new LocalDate().dayOfMonth().withMinimumValue().toString(pattern));
         result.include("data2", new LocalDate().dayOfMonth().withMaximumValue().toString(pattern));
     }
+
+    /**
+     * Define no result duas datas para uso por um seletor de período,
+     * sendo que a data1 é o primeiro dia do mês resultante da subtração da quantidade de meses informada em @minusMonts
+     * e o mês atual, e a data2 é o último dia do mês atual.
+     * @param result Objeto result do Vraptor
+     * @param minusMonths Quantidade de meses para subtrair do mês atual
+     * @param pattern Formato de data a ser utilizado no retorno
+     */
+    public static void defineCurrentMonthLastDayMinusMonths(Result result, Integer minusMonths, String pattern) {
+        result.include("data1", new LocalDate().minusMonths(minusMonths).dayOfMonth().withMinimumValue().toString(pattern));
+        result.include("data2", new LocalDate().dayOfMonth().withMaximumValue().toString(pattern));
+    }
 }
