@@ -3,6 +3,9 @@ package com.viniciuscardoso.arch.vraptor.utility;
 import br.com.caelum.vraptor.Result;
 import org.joda.time.LocalDate;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * Project: arch
  * User: Vinicius Cardoso
@@ -70,6 +73,13 @@ public class ControllerUtils {
         result.include("alerta", msg);
         result.include("classeAlerta", "alert-danger");
         result.include("toastrType", "error");
+    }
+
+    public static String getFullStackTrace(Throwable e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw, true);
+        e.printStackTrace(pw);
+        return sw.getBuffer().toString();
     }
 
     /**
