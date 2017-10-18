@@ -3,10 +3,8 @@ package com.viniciuscardoso.arch.vraptor.dao.common;
 import com.viniciuscardoso.arch.vraptor.domain.common.AbstractEntity;
 import com.viniciuscardoso.arch.vraptor.domain.interfaces.IActorAudited;
 import com.viniciuscardoso.arch.vraptor.domain.interfaces.IAuditable;
-import com.viniciuscardoso.arch.vraptor.exception.DaoException;
 import com.viniciuscardoso.arch.vraptor.utility.ConvertUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.joda.time.LocalDateTime;
@@ -59,10 +57,9 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
             session.save(entity);
             session.getTransaction().commit();
             logger.info("Objeto [" + this.getEntityName() + "] adicionado com id = " + String.valueOf(entity.getId()));
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao adicionar objeto. " + e.getMessage());
-            throw new DaoException("Não foi possível criar o objeto [" + this.getEntityName() + "].", e);
         }
     }
 
@@ -79,10 +76,9 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
             }
             session.getTransaction().commit();
             logger.info("Objetos [" + this.getEntityName() + "] adicionados com sucesso.");
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao adicionar objeto. " + e.getMessage());
-            throw new DaoException("Não foi possível criar o objeto [" + this.getEntityName() + "].", e);
         }
     }
 
@@ -93,10 +89,9 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
             session.save(entity);
             session.getTransaction().commit();
             logger.info("Objeto [" + this.getEntityName() + "] adicionado com id = " + String.valueOf(entity.getId()));
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao adicionar objeto. " + e.getMessage());
-            throw new DaoException("Não foi possível criar o objeto [" + this.getEntityName() + "].", e);
         }
     }
     //</editor-fold>
@@ -104,36 +99,24 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     //<editor-fold desc="[Retrieve]">
     @SuppressWarnings("unchecked")
     public List<T> list() {
-        try {
-            return session.createQuery("from " + this.classe.getName()).list();
-        } catch (HibernateException e) {
-            throw new DaoException("Não foi possível recuperar objetos [" + this.getEntityName() + "].", e);
-        }
+        return session.createQuery("from " + this.classe.getName()).list();
     }
 
     @SuppressWarnings("unchecked")
     public T getById(Long id) {
-        try {
-            Query q = session.createQuery("from " + this.classe.getName() + " where id = :id");
-            q.setParameter("id", id);
-            return (T) q.uniqueResult();
-        } catch (HibernateException e) {
-            throw new DaoException("Não foi possível carregar objeto [" + this.getEntityName() + "].", e);
-        }
+        Query q = session.createQuery("from " + this.classe.getName() + " where id = :id");
+        q.setParameter("id", id);
+        return (T) q.uniqueResult();
     }
 
     @SuppressWarnings("unchecked")
     public List<T> getList(List<Long> ids) {
-        try {
-            if (ids != null && ids.size() > 0) {
-                Query q = session.createQuery("from " + this.classe.getName() + " where id in (:ids)");
-                q.setParameterList("ids", ids);
-                return q.list();
-            } else {
-                return Collections.emptyList();
-            }
-        } catch (HibernateException e) {
-            throw new DaoException("Não foi possível carregar objeto [" + this.getEntityName() + "].", e);
+        if (ids != null && ids.size() > 0) {
+            Query q = session.createQuery("from " + this.classe.getName() + " where id in (:ids)");
+            q.setParameterList("ids", ids);
+            return q.list();
+        } else {
+            return Collections.emptyList();
         }
     }
 
@@ -141,12 +124,7 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
     public List<T> listSorted(String... listFields) {
         String q = "from " + this.classe.getName();
         if (listFields.length > 0) q += " order by " + join(listFields, ", ");
-
-        try {
-            return session.createQuery(q).list();
-        } catch (HibernateException e) {
-            throw new DaoException("Não foi possível recuperar objetos [" + this.getEntityName() + "].", e);
-        }
+        return session.createQuery(q).list();
     }
     public int countAll() {
         return ConvertUtils.convertTo(this.session.createQuery("select count(*) from " + this.classe.getName()).uniqueResult(), Integer.class);
@@ -172,10 +150,9 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
             session.merge(entity);
             session.getTransaction().commit();
             logger.info("Objeto [" + this.getEntityName() + "] atualizado com id = " + String.valueOf(entity.getId()));
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao atualizar objeto. " + e.getMessage());
-            throw new DaoException("Não foi possível atualizar o objeto [" + this.getEntityName() + "].", e);
         }
     }
 
@@ -186,10 +163,9 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
             session.update(entity);
             session.getTransaction().commit();
             logger.info("Objeto [" + this.getEntityName() + "] atualizado com id = " + String.valueOf(entity.getId()));
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao atualizar objeto. " + e.getMessage());
-            throw new DaoException("Não foi possível atualizar o objeto [" + this.getEntityName() + "].", e);
         }
     }
     //</editor-fold>
@@ -201,10 +177,9 @@ public abstract class AbstractAuditableDao<T extends AbstractEntity, A extends I
             session.delete(entity);
             session.getTransaction().commit();
             logger.info("Objeto [" + this.getEntityName() + "] removido com id = " + String.valueOf(entity.getId()));
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
-            logger.info("Erro ao atualizar objeto. " + e.getMessage());
-            throw new DaoException("Não foi possível excluir objeto [" + this.getEntityName() + "].", e);
+            logger.info("Erro ao remover objeto. " + e.getMessage());
         }
     }
     //</editor-fold>
