@@ -96,7 +96,7 @@ public class ConvertUtils {
             DateTime dtTime = fmt.parseDateTime(maybeDate);
             dt = dtTime.toLocalDateTime();
         } catch (IllegalArgumentException e) {
-            throw new UtilityException("Data inválida!");
+            throw new UtilityException("Data inválida! (data: " + maybeDate + "; formato: " + format + ")");
         }
         return dt;
     }
@@ -111,7 +111,7 @@ public class ConvertUtils {
             DateTime dtTime = fmt.parseDateTime(dateStripped);
             return dtTime.toLocalDate();
         } catch (IllegalArgumentException e) {
-            throw new UtilityException("Data inválida!");
+            throw new UtilityException("Data inválida! (data: " + maybeDate + "; formato: " + format + ")");
         }
 
     }
