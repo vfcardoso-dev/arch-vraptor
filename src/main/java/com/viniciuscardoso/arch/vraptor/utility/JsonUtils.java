@@ -42,6 +42,16 @@ public class JsonUtils {
 	}
 
 	/**
+	 * Retorna JSON contendo dados de erro, para exibição ao usuário
+	 * @param result Objeto result do Vraptor
+	 * @param e Exceção lançada
+	 */
+	public static void setErrorJsonResultWithoutStacktrace(Result result, String title, final Throwable e) {
+
+		result.use(Results.http()).body(title + ":::" + e.getMessage()).setStatusCode(500);
+	}
+
+	/**
 	 * Retorna o json formatado para o JqGrid contendo dados para montar grid
 	 * @param linhas Registros da consulta
 	 * @param rows número de linhas selecionadas para exibir no grid
