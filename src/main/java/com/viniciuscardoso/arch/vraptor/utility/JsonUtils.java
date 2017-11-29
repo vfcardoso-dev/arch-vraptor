@@ -22,9 +22,17 @@ public class JsonUtils {
      * @param result Objeto result do Vraptor
      */
     public static void setSuccessJsonResult(Result result) {
-
         result.use(Results.status()).ok();
     }
+
+	/**
+	 * Retorna JSON contendo status 200 e mensagem de sucesso
+	 * @param result Objeto result do Vraptor
+	 * @param message Mensagem de sucesso para exibir ao usuário
+     */
+	public static void setSuccessJsonResult(Result result, String message) {
+		result.use(Results.json()).withoutRoot().from(message).serialize();
+	}
 
     /**
 	 * Retorna JSON contendo dados de erro, para exibição ao usuário
@@ -32,7 +40,6 @@ public class JsonUtils {
 	 * @param e Exceção lançada
 	 */
 	public static void setErrorJsonResult(Result result, final Throwable e) {
-
 		final StringWriter sw = new StringWriter();
 		final PrintWriter pw = new PrintWriter(sw, true);
 		e.printStackTrace(pw);
@@ -47,7 +54,6 @@ public class JsonUtils {
 	 * @param e Exceção lançada
 	 */
 	public static void setErrorJsonResultWithoutStacktrace(Result result, String title, final Throwable e) {
-
 		result.use(Results.http()).body(title + ":::" + e.getMessage()).setStatusCode(500);
 	}
 
