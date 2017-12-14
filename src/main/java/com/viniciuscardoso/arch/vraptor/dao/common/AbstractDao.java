@@ -52,6 +52,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao adicionar objeto. " + e.getMessage());
+            throw e;
         }
     }
 
@@ -66,6 +67,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao adicionar objeto. " + e.getMessage());
+            throw e;
         }
     }
     //</editor-fold>
@@ -116,6 +118,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao atualizar objeto. " + e.getMessage());
+            throw e;
         }
     }
     //</editor-fold>
@@ -130,6 +133,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         } catch (Exception e) {
             session.getTransaction().rollback();
             logger.info("Erro ao remover objeto. " + e.getMessage());
+            throw e;
         }
     }
     //</editor-fold>
