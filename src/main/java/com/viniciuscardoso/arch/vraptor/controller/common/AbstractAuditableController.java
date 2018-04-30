@@ -7,7 +7,6 @@ import com.viniciuscardoso.arch.vraptor.controller.interfaces.IControllerCrudUpl
 import com.viniciuscardoso.arch.vraptor.dao.common.AbstractAuditableDao;
 import com.viniciuscardoso.arch.vraptor.domain.common.AbstractEntity;
 import com.viniciuscardoso.arch.vraptor.domain.interfaces.IActorAudited;
-import com.viniciuscardoso.arch.vraptor.exception.ControllerException;
 import com.viniciuscardoso.arch.vraptor.utility.ControllerUtils;
 
 /**
@@ -55,7 +54,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
             dao.save(entity, creator);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
             result.redirectTo(self).list();
-        } catch (ControllerException e) {
+        } catch (Exception e) {
             ControllerUtils.defineErrorMessage(result, e);
             result.redirectTo(self).create();
         }
@@ -73,7 +72,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
             dao.save(entity, creator);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
             result.redirectTo(self).list();
-        } catch (ControllerException e) {
+        } catch (Exception e) {
             ControllerUtils.defineErrorMessage(result, e);
             result.redirectTo(self).create();
         }
@@ -100,7 +99,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
             dao.update(entity, changer);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
             result.redirectTo(self).list();
-        } catch (ControllerException e) {
+        } catch (Exception e) {
             ControllerUtils.defineErrorMessage(result, e);
             result.redirectTo(self).edit(entity.getId());
         }
@@ -117,7 +116,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
             dao.update(entity, changer);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
             result.redirectTo(self).list();
-        } catch (ControllerException e) {
+        } catch (Exception e) {
             ControllerUtils.defineErrorMessage(result, e);
             result.redirectTo(self).edit(entity.getId());
         }
@@ -134,7 +133,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
             E e = (E) dao.getById(id);
             dao.remove(e);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
-        } catch (ControllerException e) {
+        } catch (Exception e) {
             ControllerUtils.defineErrorMessage(result, e);
         } finally {
             result.redirectTo(self).list();
@@ -153,7 +152,7 @@ public abstract class AbstractAuditableController<T extends AbstractAuditableDao
             E e = (E) dao.getById(id);
             dao.remove(e);
             ControllerUtils.defineSuccessMessage(result, textSuccess);
-        } catch (ControllerException e) {
+        } catch (Exception e) {
             ControllerUtils.defineErrorMessage(result, e);
         } finally {
             result.redirectTo(self).list();
