@@ -10,6 +10,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -81,9 +82,14 @@ public class ConvertUtils {
     }
 
     public static String getFormattedNumber(Double number, int decimals, Locale locale) {
+        return ConvertUtils.getFormattedNumber(number, decimals, locale, RoundingMode.HALF_EVEN);
+    }
+
+    public static String getFormattedNumber(Double number, int decimals, Locale locale, RoundingMode mode) {
         NumberFormat nf = NumberFormat.getInstance(locale);
         nf.setMaximumFractionDigits(decimals);
         nf.setMinimumFractionDigits(decimals);
+        nf.setRoundingMode(mode);
         return nf.format(number);
     }
     //</editor-fold>
