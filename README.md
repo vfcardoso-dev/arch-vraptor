@@ -4,7 +4,7 @@ A arch-vraptor é uma biblioteca simples criada por mim para auxiliar nas tarefa
 
 Atualmente ela está adaptada para funcionar com a versão 3.5.x do VRaptor. Em breve criarei outra versão para a versão 4.x.
 
-Para utilizá-la, basta compilar um jar com o código-fonte do repositório, adicionar esse jar no classpath, e adicionar o seguinte trecho no arquivo web.xml.
+Para utilizá-la, basta compilar um .jar com o código-fonte do repositório, adicionar esse jar no classpath, e adicionar o seguinte trecho no arquivo web.xml.
 
 ```
 #!xml
