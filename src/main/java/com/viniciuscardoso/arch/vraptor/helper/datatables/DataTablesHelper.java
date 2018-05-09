@@ -23,7 +23,9 @@ public class DataTablesHelper<T> {
         if (length == -1) { //se length == -1, traz todos os registros.
             filteredList = rawObjectArray;
         } else {
-            filteredList = rawObjectArray.subList(start, (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length));
+            int end = (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length);
+            start = end < start ? 0 : start; //se end > start, há filtragem junto a paginação. Reload paginação.
+            filteredList = rawObjectArray.subList(start, end);
         }
         DataTables<T> dataTables = new DataTables<>();
         dataTables.setRecordsTotal(totalRegisters);
@@ -43,7 +45,9 @@ public class DataTablesHelper<T> {
         if (length == -1) { //se length == -1, traz todos os registros.
             filteredList = rawObjectArray;
         } else {
-            filteredList = rawObjectArray.subList(start, (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length));
+            int end = (start + length > rawObjectArray.size() ? rawObjectArray.size() : start + length);
+            start = end < start ? 0 : start; //se end > start, há filtragem junto a paginação. Reload paginação.
+            filteredList = rawObjectArray.subList(start, end);
         }
 
         DataTables<T> dataTables = new DataTables<>();
