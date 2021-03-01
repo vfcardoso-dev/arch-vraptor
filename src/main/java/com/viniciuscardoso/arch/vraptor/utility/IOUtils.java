@@ -90,10 +90,26 @@ public class IOUtils {
     }
 
     public static void writeFile(String filePath, String fileName, UploadedFile uploadedFile) throws IOException {
-        FileOutputStream fileToWrite = null;
+        writeFile(filePath, fileName, uploadedFile, true);
+    }
+
+    public static void writeFile(String filePath, String fileName, InputStream inputStream) throws IOException {
+        writeFile(filePath, fileName, inputStream, true);
+    }
+
+    public static void writeFile(String filePath, String fileName, UploadedFile uploadedFile, boolean loosePermissions) throws IOException {
+        FileOutputStream fosToWrite = null;
         try {
-            fileToWrite = new FileOutputStream(new File(filePath, fileName));
-            org.apache.commons.io.IOUtils.copyLarge(uploadedFile.getFile(), fileToWrite);
+            File file = new File(filePath, fileName);
+
+            if (loosePermissions) {
+                file.setReadable(true);
+                file.setWritable(true);
+                file.setExecutable(true);
+            }
+
+            fosToWrite = new FileOutputStream(file);
+            org.apache.commons.io.IOUtils.copyLarge(uploadedFile.getFile(), fosToWrite);
             uploadedFile.getFile().close();
 
         } catch (FileNotFoundException e) {
@@ -103,15 +119,23 @@ public class IOUtils {
         } catch (IOException e) {
             throw new UtilityException("Não foi possível enviar o arquivo!", e);
         } finally {
-            if (fileToWrite != null) fileToWrite.close();
+            if (fosToWrite != null) fosToWrite.close();
         }
     }
 
-    public static void writeFile(String filePath, String fileName, InputStream inputStream) throws IOException {
-        FileOutputStream fileToWrite = null;
+    public static void writeFile(String filePath, String fileName, InputStream inputStream, boolean loosePermissions) throws IOException {
+        FileOutputStream fosToWrite = null;
         try {
-            fileToWrite = new FileOutputStream(new File(filePath, fileName));
-            org.apache.commons.io.IOUtils.copyLarge(inputStream, fileToWrite);
+            File file = new File(filePath, fileName);
+
+            if (loosePermissions) {
+                file.setReadable(true);
+                file.setWritable(true);
+                file.setExecutable(true);
+            }
+
+            fosToWrite = new FileOutputStream(file);
+            org.apache.commons.io.IOUtils.copyLarge(inputStream, fosToWrite);
             inputStream.close();
 
         } catch (FileNotFoundException e) {
@@ -121,7 +145,7 @@ public class IOUtils {
         } catch (IOException e) {
             throw new UtilityException("Não foi possível enviar o arquivo!", e);
         } finally {
-            if (fileToWrite != null) fileToWrite.close();
+            if (fosToWrite != null) fosToWrite.close();
         }
     }
 
